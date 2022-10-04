@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace EingabenBeispiel
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             /*
             * Schreiben Sie eine Applikation, mit der die Fläche und 
@@ -39,8 +36,7 @@ namespace EingabenBeispiel
             double s = 0.0;
             double a = 0.0;
             double b = 0.0;
-            double c = 0.0;
-            string eingabe = string.Empty;
+            double c = 0.0;            
             string headerText = "Berechnung allgemeines Dreieck";
             int xPos = 0;            
 
@@ -63,13 +59,11 @@ namespace EingabenBeispiel
             {
                 a = double.Parse(Console.ReadLine());
 
-                Console.Write("\tSeite b: ");
-                eingabe = Console.ReadLine();
-                b = double.Parse(eingabe);
+                Console.Write("\tSeite b: ");                
+                b = double.Parse(Console.ReadLine());
 
-                Console.Write("\tSeite c: ");
-                eingabe = Console.ReadLine();
-                c = double.Parse(eingabe);               
+                Console.Write("\tSeite c: ");                
+                c = double.Parse(Console.ReadLine());               
             }
             catch(Exception ex)
             {
