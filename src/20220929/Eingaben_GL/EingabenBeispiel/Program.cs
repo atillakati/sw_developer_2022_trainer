@@ -40,16 +40,8 @@ namespace EingabenBeispiel
             string headerText = "Berechnung allgemeines Dreieck";
             int xPos = 0;            
 
-            //1. Programm Überschrift ausgeben/generieren
-            Console.Clear();
-            Console.WriteLine(new string('#', Console.WindowWidth-1));
-
-            xPos = (Console.WindowWidth - headerText.Length) / 2;
-            Console.CursorLeft = xPos;
+            //1. Programm Überschrift ausgeben/generieren            
             Console.WriteLine(headerText);
-
-            Console.WriteLine(new string('#', Console.WindowWidth - 1));
-            Console.WriteLine();
 
             //2. Seitenlängen einlesen (a, b, c)
             Console.WriteLine("Bitte Seitenlängen eingeben!");
