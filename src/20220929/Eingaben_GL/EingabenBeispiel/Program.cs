@@ -1,11 +1,14 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EingabenBeispiel
 {
     internal class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
             /*
             * Schreiben Sie eine Applikation, mit der die Fläche und 
@@ -36,12 +39,21 @@ namespace EingabenBeispiel
             double s = 0.0;
             double a = 0.0;
             double b = 0.0;
-            double c = 0.0;            
+            double c = 0.0;
+            string eingabe = string.Empty;
             string headerText = "Berechnung allgemeines Dreieck";
-            int xPos = 0;            
+            int xPos = 0;
 
-            //1. Programm Überschrift ausgeben/generieren            
+            //1. Programm Überschrift ausgeben/generieren
+            Console.Clear();
+            Console.WriteLine(new string('#', Console.WindowWidth - 1));
+
+            xPos = (Console.WindowWidth - headerText.Length) / 2;
+            Console.CursorLeft = xPos;
             Console.WriteLine(headerText);
+
+            Console.WriteLine(new string('#', Console.WindowWidth - 1));
+            Console.WriteLine();
 
             //2. Seitenlängen einlesen (a, b, c)
             Console.WriteLine("Bitte Seitenlängen eingeben!");
@@ -51,13 +63,15 @@ namespace EingabenBeispiel
             {
                 a = double.Parse(Console.ReadLine());
 
-                Console.Write("\tSeite b: ");                
-                b = double.Parse(Console.ReadLine());
+                Console.Write("\tSeite b: ");
+                eingabe = Console.ReadLine();
+                b = double.Parse(eingabe);
 
-                Console.Write("\tSeite c: ");                
-                c = double.Parse(Console.ReadLine());               
+                Console.Write("\tSeite c: ");
+                eingabe = Console.ReadLine();
+                c = double.Parse(eingabe);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\a\nERROR: " + ex.Message);
