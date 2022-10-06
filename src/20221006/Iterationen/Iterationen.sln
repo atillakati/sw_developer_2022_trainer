@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iterationen", "Iterationen\Iterationen.csproj", "{DE138191-08BC-4B34-968D-03B896DB762D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeilnehmerVerwaltungV1", "TeilnehmerVerwaltungV1\TeilnehmerVerwaltungV1.csproj", "{27A50841-888E-420F-8A58-D7A8B1357895}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE138191-08BC-4B34-968D-03B896DB762D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE138191-08BC-4B34-968D-03B896DB762D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE138191-08BC-4B34-968D-03B896DB762D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE138191-08BC-4B34-968D-03B896DB762D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27A50841-888E-420F-8A58-D7A8B1357895}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27A50841-888E-420F-8A58-D7A8B1357895}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27A50841-888E-420F-8A58-D7A8B1357895}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27A50841-888E-420F-8A58-D7A8B1357895}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {838B681D-29F4-40F8-949F-53A73058673E}
+	EndGlobalSection
+EndGlobal
