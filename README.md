@@ -35,3 +35,7 @@ Dies ist eine **Beschreibung** der _Aufgabe_. Bitte machen!
 ![Konzept](/images/konzept.drawio.png)
 
 Beschreibung kommt viel später....
+
+## Zusammenfassungen aus dem Unterricht:
+
+[29.09.2022](/src/20220929/readme.md)
