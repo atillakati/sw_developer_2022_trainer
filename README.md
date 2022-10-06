@@ -30,3 +30,8 @@ Dies ist eine **Beschreibung** der _Aufgabe_. Bitte machen!
 > Das hier ist noch wichtig!
  [Markdown Syntax](https://www.markdownguide.org/basic-syntax/)
  
+ ## Das Konzept
+
+![Konzept](/images/konzept.drawio.png)
+
+Beschreibung kommt viel später....
