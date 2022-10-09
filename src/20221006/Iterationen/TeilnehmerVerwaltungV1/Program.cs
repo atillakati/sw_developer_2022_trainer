@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace TeilnehmerVerwaltungV1
 {
+
     internal class Program
-    {
-
-
+    {        
         static void Main(string[] args)
         {
             /**
@@ -47,10 +46,7 @@ namespace TeilnehmerVerwaltungV1
             int xPos = 0;
             int participantCount = 0;
             bool isInputValid = false;
-            string name = string.Empty;
-            string surname = string.Empty;
-            string location = string.Empty;
-            DateTime birthday = DateTime.MinValue;
+            Participant[] participantList;
             int age = 0;
 
             //Header
@@ -85,8 +81,10 @@ namespace TeilnehmerVerwaltungV1
             }
             while (!isInputValid);
 
+            participantList = new Participant[participantCount];
+
             //get participant data
-            for (int i = 0; i < participantCount; i++)
+            for (int i = 0; i < participantList.Length; i++)
             {
                 //display header again
                 Console.Clear();
@@ -104,24 +102,24 @@ namespace TeilnehmerVerwaltungV1
                 do
                 {
                     Console.Write("\tVorname: ");
-                    name = Console.ReadLine();
-                    isInputValid = !(string.IsNullOrEmpty(name) || name.Length == 0);
+                    participantList[i].Name = Console.ReadLine();
+                    isInputValid = !(string.IsNullOrEmpty(participantList[i].Name) || participantList[i].Name.Length == 0);
                 }
                 while (!isInputValid);
 
                 do
                 {
                     Console.Write("\tNachname: ");
-                    surname = Console.ReadLine();
-                    isInputValid = !(string.IsNullOrEmpty(name) || name.Length == 0);
+                    participantList[i].Surname = Console.ReadLine();
+                    isInputValid = !(string.IsNullOrEmpty(participantList[i].Surname) || participantList[i].Surname.Length == 0);
                 }
                 while (!isInputValid);
 
                 do
                 {
                     Console.Write("\tWohnort: ");
-                    location = Console.ReadLine();
-                    isInputValid = !(string.IsNullOrEmpty(name) || name.Length == 0);
+                    participantList[i].Location = Console.ReadLine();
+                    isInputValid = !(string.IsNullOrEmpty(participantList[i].Location) || participantList[i].Location.Length == 0);
                 }
                 while (!isInputValid);
 
@@ -130,11 +128,11 @@ namespace TeilnehmerVerwaltungV1
                     try
                     {
                         Console.Write("\tGeburtsdatum: ");
-                        birthday = DateTime.Parse(Console.ReadLine());
+                        participantList[i].Birthday = DateTime.Parse(Console.ReadLine());
                         isInputValid = true;
 
                         //age check
-                        age = DateTime.Now.Year - birthday.Year;
+                        age = DateTime.Now.Year - participantList[i].Birthday.Year;
                         if (age < 18 || age > 110)
                         {
                             Console.Write("\aERROR: ");
@@ -157,7 +155,7 @@ namespace TeilnehmerVerwaltungV1
                 } while (!isInputValid);
 
                 //save data
-                string csvDataLine = $"{name},{surname},{birthday.ToShortDateString()},{location}";
+                string csvDataLine = $"{participantList[i].Name},{participantList[i].Surname},{participantList[i].Birthday.ToShortDateString()},{participantList[i].Location}";
                 StreamWriter sw = new StreamWriter("teilnehmerdaten.csv", true);
                 sw.WriteLine(csvDataLine);  //schreibt eine Zeile inkl. Zeilenumbruch                
                 sw.Close();
