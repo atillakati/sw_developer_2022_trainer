@@ -39,6 +39,7 @@ namespace TeilnehmerVerwaltungV1
             #region Implementation
 
             string header = "Teilnehmer Verwaltung V1.0";
+            string eingabe = string.Empty;
             int xPos = 0;
             int participantCount = 0;
             bool isInputValid = false;
@@ -148,14 +149,31 @@ namespace TeilnehmerVerwaltungV1
                         Console.ResetColor();
                         isInputValid = false;
                     }
-                } while (!isInputValid);
-
-                //save data
-                string csvDataLine = $"{participantList[i].Name},{participantList[i].Surname},{participantList[i].Birthday.ToShortDateString()},{participantList[i].Location}";
-                StreamWriter sw = new StreamWriter("teilnehmerdaten.csv", true);
-                sw.WriteLine(csvDataLine);  //schreibt eine Zeile inkl. Zeilenumbruch                
-                sw.Close();
+                } while (!isInputValid);               
             }
+
+            //output data
+            for (int i = 0; i < participantList.Length; i++)
+            {
+                Console.WriteLine($"{participantList[i].Name}, {participantList[i].Location}");
+            }
+
+            Console.Write("\n\nWollen Sie diese Daten speicher(j/n): ");
+            eingabe = Console.ReadLine();
+            if (eingabe.ToLower() == "j")
+            {
+                using (StreamWriter sw = new StreamWriter("teilnehmerdaten.csv", true))
+                {
+                    for (int i = 0; i < participantList.Length; i++)
+                    {
+                        //save data            
+                        string csvDataLine = $"{participantList[i].Name},{participantList[i].Surname},{participantList[i].Birthday.ToShortDateString()},{participantList[i].Location}";
+                        sw.WriteLine(csvDataLine);  //schreibt eine Zeile inkl. Zeilenumbruch                                    
+                    }
+                }
+            }
+
+
             #endregion
         }
     }
