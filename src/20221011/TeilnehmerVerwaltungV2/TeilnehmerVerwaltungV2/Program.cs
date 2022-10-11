@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.Remoting.Messaging;
+using Wifi.Tools;
 
 namespace TeilnehmerVerwaltungV2
 {
@@ -45,15 +45,16 @@ namespace TeilnehmerVerwaltungV2
             bool isInputValid = false;
             Participant[] participantList;
             int age = 0;
+            
 
             //Header
-            CreateHeader(header, true);
+            ConsoleTools.CreateHeader(header, true);
 
             //get count of Teilnehmer
-            participantCount = GetInt("Anzahl der Teilnehmer eingeben: ");
-            
+            participantCount = ConsoleTools.GetInt("Anzahl der Teilnehmer eingeben: ");
+
             //display header again
-            CreateHeader(header, true);
+            ConsoleTools.CreateHeader(header, true);
 
             //get participant data
             participantList = GetParticipantData(participantCount);
@@ -83,6 +84,7 @@ namespace TeilnehmerVerwaltungV2
             #endregion
         }
 
+
         static Participant[] GetParticipantData(int participantCount)
         {
             Participant[] participantList = new Participant[participantCount];
@@ -92,9 +94,9 @@ namespace TeilnehmerVerwaltungV2
             {
                 //start with participant data
                 Console.WriteLine($"Teilnehmer {i + 1}:");
-                participantList[i].Name = GetString("\tVorname: ");
-                participantList[i].Name = GetString("\tNachname: ");
-                participantList[i].Name = GetString("\tWohnort: ");
+                participantList[i].Name = ConsoleTools.GetString("\tVorname: ");
+                participantList[i].Name = ConsoleTools.GetString("\tNachname: ");
+                participantList[i].Name = ConsoleTools.GetString("\tWohnort: ");
                 participantList[i].Birthday = GetParticipantBirthday("\tGeburtsdatum: ");
             }
 
@@ -109,7 +111,7 @@ namespace TeilnehmerVerwaltungV2
 
             do
             {
-                birthday = GetDateTime(inputPrompt);
+                birthday = ConsoleTools.GetDateTime(inputPrompt);
 
                 //age check
                 age = DateTime.Now.Year - birthday.Year;
@@ -125,98 +127,6 @@ namespace TeilnehmerVerwaltungV2
             } while (!isInputValid);
 
             return birthday;
-        }
-
-        static DateTime GetDateTime(string inputPrompt)
-        {
-            DateTime inputValue = DateTime.MinValue;
-            bool isInputValid = false;
-
-            do
-            {
-                try
-                {
-                    Console.Write(inputPrompt);
-                    inputValue = DateTime.Parse(Console.ReadLine());
-                    isInputValid = true;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write("\aERROR: ");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine();
-                    Console.ResetColor();
-                    isInputValid = false;
-                }
-            } while (!isInputValid);
-
-            return inputValue;
-        }
-
-        static string GetString(string inputPrompt)
-        {
-            string inputString = string.Empty;
-            bool isInputValid = false;
-
-            do
-            {
-                Console.Write(inputPrompt);
-                inputString = Console.ReadLine();
-
-                //null or empty check
-                isInputValid = !string.IsNullOrEmpty(inputString);
-            }
-            while (!isInputValid);
-
-            return inputString;
-        }
-
-        static int GetInt(string inputPrompt)
-        {
-            int intValue = 0;
-            bool isInputValid = false;
-
-            do
-            {
-                try
-                {
-                    Console.Write(inputPrompt);
-                    intValue = int.Parse(Console.ReadLine());
-                    isInputValid = true;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write("\aERROR: ");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine();
-                    Console.ResetColor();
-                    isInputValid = false;
-                }
-            }
-            while (!isInputValid);
-
-            return intValue;
-        }
-
-        static void CreateHeader(string header, bool clearScreen)
-        {
-            int xPos = 0;
-
-            if (clearScreen)
-            {
-                Console.Clear();
-            }
-
-            Console.WriteLine(new string('#', Console.WindowWidth - 1));
-
-            xPos = (Console.WindowWidth - header.Length) / 2;
-            Console.CursorLeft = xPos;
-            Console.WriteLine(header);
-
-            Console.WriteLine(new string('#', Console.WindowWidth - 1));
-            Console.WriteLine();
-        }
+        }        
     }
 }
