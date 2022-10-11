@@ -81,6 +81,11 @@ namespace Wifi.Tools
             return intValue;
         }
 
+        /// <summary>
+        /// aewsdgfdsaf
+        /// </summary>
+        /// <param name="header"></param>
+        /// <param name="clearScreen"></param>
         public static void CreateHeader(string header, bool clearScreen)
         {
             int xPos = 0;
