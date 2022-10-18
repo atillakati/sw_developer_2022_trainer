@@ -26,13 +26,10 @@ namespace GL_Klassen
             //mitarbeiter.Salary = -5002.654m;
 
             Console.WriteLine($"{mitarbeiter.Name} - ");
-            mitarbeiter.Name = "Gandalf Sehrweise";
-
-            mitarbeiter.
+            mitarbeiter.Name = "Gandalf Sehrweise";            
 
             mitarbeiter.Display();
             mitarbeiter2.Display();
         }
-
     }
 }
