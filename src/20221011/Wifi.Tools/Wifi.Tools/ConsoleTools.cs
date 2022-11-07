@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Wifi.Tools
 {
+    public delegate void ErrorOutputHandler(Exception ex);
+
     public abstract class ConsoleTools
     {
         public static DateTime GetDateTime(string inputPrompt)
@@ -36,7 +38,7 @@ namespace Wifi.Tools
         }
 
         public static string GetString(string inputPrompt)
-        {
+        {           
             string inputString = string.Empty;
             bool isInputValid = false;
 
@@ -53,7 +55,13 @@ namespace Wifi.Tools
             return inputString;
         }
 
+
         public static int GetInt(string inputPrompt)
+        {
+            return GetInt(inputPrompt, DefaultErrorOutput);
+        }
+
+        public static int GetInt(string inputPrompt, ErrorOutputHandler errorOutputHandler)
         {
             int intValue = 0;
             bool isInputValid = false;
@@ -68,11 +76,12 @@ namespace Wifi.Tools
                 }
                 catch (Exception ex)
                 {
-                    Console.Write("\aERROR: ");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine();
-                    Console.ResetColor();
+                    errorOutputHandler?.Invoke(ex);
+                    //if (errorOutputHandler != null)
+                    //{
+                    //    errorOutputHandler(ex);
+                    //}
+
                     isInputValid = false;
                 }
             }
@@ -103,6 +112,17 @@ namespace Wifi.Tools
 
             Console.WriteLine(new string('#', Console.WindowWidth - 1));
             Console.WriteLine();
+        }
+
+
+        public static void DefaultErrorOutput(Exception ex)
+        {
+            Console.Write("\aERROR: ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(ex.Message);
+            Console.WriteLine();
+            Console.ResetColor();
+
         }
     }
 }
