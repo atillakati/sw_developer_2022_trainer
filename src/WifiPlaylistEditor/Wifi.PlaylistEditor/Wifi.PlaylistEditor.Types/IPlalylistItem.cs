@@ -6,8 +6,6 @@ namespace Wifi.PlaylistEditor.Types
 {
     public interface IPlaylistItem
     {
-        Guid Id { get; }
-
         string Titel { get; set; }
 
         string Artist { get; set; }
