@@ -1,0 +1,435 @@
+openapi: 3.0.3
+info:
+  title: API description for Playlist project
+  description: |-
+    This is a sample Playlist Server based on the OpenAPI 3.0 specification.  You can find out more about
+    OpenAPI at [https://oai.github.io/Documentation](https://oai.github.io/Documentation).    
+    
+    Playlist server should provide following functionalities:
+
+    - Upload item to server
+    - Delete item from server
+    - Get data from one item
+    - Get list of all items on server
+    - Create playlists
+    - Modify playlists
+    - Get a list of all existing playlists
+
+    Further sources for information
+      - [Multipart Requests](https://swagger.io/docs/specification/describing-request-body/multipart-requests)
+      - [Upload And Download Multiple Files Using Web API](https://github.com/JayKrishnareddy/UploadandDownloadFiles)
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0.0
+
+externalDocs:
+  description: Find out more about OpenAPI
+  url: https://oai.github.io/Documentation  
+
+servers:
+  - url: https://localhost/playlistapi/
+
+tags:   
+  - name: item-handling
+    description: Item handling for the clients, up- and download of playlist items to server. See https://github.com/JayKrishnareddy/UploadandDownloadFiles
+  - name: playlists
+    description: Basic path to work with playlist items
+  
+paths:
+
+  /items:
+    get:
+      tags:
+        - item-handling
+      summary: Get all available item data from server
+      description: Returns all available item data from server
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+    
+    post:
+      tags:
+        - item-handling
+      summary: Creates/uploades new item on server
+      description: ''      
+      requestBody:
+        description: Creates/uploades new item on server with provided data in body.
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ItemPost'
+          
+      responses:
+        '201':
+          description: successful operation           
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemLink'
+
+        '405':
+          description: Invalid input    
+
+    delete:
+      tags:
+        - item-handling
+      summary: Deletes a playlist item from server
+      description: delete a playlist      
+      parameters:        
+        - name: itemid
+          in: path
+          description: ID of playlist item to delete
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '201':
+          description: successful operation
+        '400':
+          description: Invalid playlist value 
+        '404':
+          description: Playlist not found    
+
+  /items/{itemId}:
+    get:
+      tags:
+        - item-handling
+      summary: Returns item by ID
+      description: Returns a single item data      
+      parameters:
+        - name: itemId
+          in: path
+          description: ID of item to return
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaylistItem'                    
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Playlist not found    
+    
+  /playlists:
+    get:
+      tags:
+        - playlists
+      summary: Get all existing playlists
+      description: Returns a list of existing playlist            
+      responses:
+        '201':
+          description: Playlist was successful created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaylistList'                            
+        '404':
+          description: No playlists found      
+    
+    post:
+      tags:
+        - playlists
+      summary: Creates a new playlist with data provided in body
+      description: ''      
+      requestBody:
+        description: Creates new playlist with provided data in body.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaylistPost'
+       
+      responses:
+        '201':
+          description: successful operation           
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaylistLink'          
+
+        '405':
+          description: Invalid input    
+
+  /playlists/{playlistId}:
+    get:
+      tags:
+        - playlists
+      summary: Returns playlist by ID
+      description: Returns a single playlist      
+      parameters:
+        - name: playlistId
+          in: path
+          description: ID of playlist to return
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Playlist'                    
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Playlist not found      
+    
+    put:
+      tags:
+        - playlists
+      summary: Updates playlist items by ID
+      description: Updates playlist items by ID. The existing items within the playlist will be replaced by received item list.
+      parameters:
+        - name: playlistId
+          in: path
+          description: ID of playlist to update
+          required: true
+          schema:
+            type: string
+            format: string
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaylistUpdate'
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Playlist'                    
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Playlist not found  
+
+    delete:
+      tags:
+        - playlists
+      summary: Deletes a playlist
+      description: delete a playlist      
+      parameters:        
+        - name: playlistId
+          in: path
+          description: ID of playlist to delete
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '201':
+          description: successful operation
+        '400':
+          description: Invalid playlist value 
+        '404':
+          description: Playlist not found      
+
+components:
+  schemas:
+    ItemList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlaylistItem'
+    
+    ItemListPost:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlaylistItemPost'
+
+    PlaylistItem:
+      type: object
+      properties:
+        id:   
+          type: string
+          format: string
+          example: 4979875A-123E-4346-CCAB-CB5CE62DA97C
+        title:
+          type: string
+          format: string
+          example: The bird song
+        artist:
+          type: string
+          format: string
+          example: Gandalf Singer
+        duration:
+          type: integer
+          format: int64
+          example: 205
+        thumbnail:
+          type: string
+          format: binary
+        extension:
+          type: string
+          format: string
+          example: mp3
+        path:
+          type: string
+          format: string
+          example: data\musik\Bethoven.mp3
+      required:
+        - path 
+
+    PlaylistItemPost:
+      type: object
+      properties:             
+        id:
+          type: string
+          format: string
+          description: The id of the item to Updates
+          example: 4979875A-A40E-4CC6-99AB-CB5CE62DA97C  
+        filename:
+          type: string
+          format: string
+          example: Bethoven_song
+        extension:
+          type: string
+          format: string
+          example: mp3                
+      required:
+        - filename 
+        - extension
+        - file
+
+    ItemPost:
+      type: object
+      properties:                
+        filename:
+          type: string
+          format: string
+          example: Bethoven_song
+        extension:
+          type: string
+          format: string
+          example: mp3        
+        file:
+          type: string
+          format: binary
+          description: File to upload
+      required:
+        - filename 
+        - extension
+        - file
+
+    Playlist:
+      type: object
+      properties:
+        id: 
+          type: string
+          format: string
+          example: 4979875A-A40E-4CC6-99AB-CB5CE62DA97C
+        name:
+          type: string
+          format: string
+          example: MyMegaHitsPlaylist_2022
+        duration:
+          type: integer
+          format: int64
+          example: 680
+        autor:
+          type: string
+          format: string
+          example: DJ Gandalf
+        dateOfCreation: 
+          type: string
+          format: date          
+          example: "2019-05-17"        
+        items: 
+          type: array
+          items:
+            $ref: '#/components/schemas/PlaylistItem'
+      required:
+        - id
+        - name
+        - duration
+        - autor
+        - dateOfCreation
+        - items
+    
+    PlaylistLink:
+      type: object
+      properties:
+        href: 
+          type: string
+          format: string
+          example: "http://localhost/playlistapi/playlists/4979875A-A40E-4CC6-99AB-CB5CE62DA97C"        
+    
+    ItemLink:
+      type: object
+      properties:
+        href: 
+          type: string
+          format: string
+          example: "http://localhost/playlistapi/items/4979875A-A40E-4CC6-99AB-CB5CE62DA97C" 
+
+    PlaylistUpdate:
+      type: object
+      properties:          
+        items: 
+          type: array
+          items:
+            $ref: '#/components/schemas/PlaylistItemPost'
+
+    PlaylistPost:
+      type: object
+      properties:        
+        name:
+          type: string
+          format: string
+          example: MyMegaHitsPlaylist_2022        
+        autor:
+          type: string
+          format: string
+          example: DJ Gandalf        
+        items: 
+          type: array
+          items:
+            $ref: '#/components/schemas/PlaylistItemPost'
+
+    PlaylistInfo:
+      type: object
+      properties:
+        id: 
+          type: string
+          format: string
+          example: 4979875A-A40E-4CC6-99AB-CB5CE62DA97C       
+        name:
+          type: string
+          format: string
+          example: MyMegaHitsPlaylist_2022       
+        href:
+          type: string
+          format: string
+          example: http://localhost/playlistapi/4979875A-A40E-4CC6-99AB-CB5CE62DA97C
+        
+    PlaylistList:
+      type: object
+      properties:
+        playlists:  
+          type: array
+          items:
+            $ref: '#/components/schemas/PlaylistInfo'    
