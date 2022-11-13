@@ -7,11 +7,17 @@ info:
     
     Playlist server should provide following functionalities:
 
+    - Upload item to server
+    - Delete item from server
+    - Get data from one item
+    - Get list of all items on server
     - Create playlists
     - Modify playlists
     - Get a list of all existing playlists
 
-    Trainee playlist project homepage: [here](https://git.solve.ch/trainee-teachers/playlistgeneratorteacher/-/tree/main/doc)
+    Further sources for information
+      - [Multipart Requests](https://swagger.io/docs/specification/describing-request-body/multipart-requests)
+      - [Upload And Download Multiple Files Using Web API](https://github.com/JayKrishnareddy/UploadandDownloadFiles)
 
   license:
     name: Apache 2.0
@@ -26,10 +32,11 @@ servers:
   - url: https://localhost/playlistapi/
 
 tags:   
+  - name: item-handling
+    description: Item handling for the clients, up- and download of playlist items to server. See https://github.com/JayKrishnareddy/UploadandDownloadFiles
   - name: playlists
     description: Basic path to work with playlist items
-  - name: item-handling
-    description: Item handling for the clients, up- and download of playlist items to server
+  
 paths:
 
   /items:
@@ -45,29 +52,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ItemList'
+    
     post:
       tags:
         - item-handling
-      summary: Creates/uploades new items on server
+      summary: Creates/uploades new item on server
       description: ''      
       requestBody:
-        description: Creates/uploades new items on server with provided data in body.
+        description: Creates/uploades new item on server with provided data in body.
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ItemListPost'
+              $ref: '#/components/schemas/ItemPost'
+          
       responses:
         '201':
           description: successful operation           
-          headers:
-            location:
+          content:
+            application/json:
               schema:
-                type: string
-              description: "The link to generated ressource will be returned. e.g: http://localhost/playlistapi/items/4979875A-A40E-4CC6-99AB-CB5CE62DA97C"
+                $ref: '#/components/schemas/ItemLink'
 
         '405':
-          description: Invalid input      
+          description: Invalid input    
+
     delete:
       tags:
         - item-handling
@@ -89,6 +98,32 @@ paths:
         '404':
           description: Playlist not found    
 
+  /items/{itemId}:
+    get:
+      tags:
+        - item-handling
+      summary: Returns item by ID
+      description: Returns a single item data      
+      parameters:
+        - name: itemId
+          in: path
+          description: ID of item to return
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaylistItem'                    
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Playlist not found    
+    
   /playlists:
     get:
       tags:
@@ -121,11 +156,10 @@ paths:
       responses:
         '201':
           description: successful operation           
-          headers:
-            location:
+          content:
+            application/json:
               schema:
-                type: string
-              description: "The link to generated ressource will be returned. e.g: http://localhost/playlistapi/4979875A-A40E-4CC6-99AB-CB5CE62DA97C"
+                $ref: '#/components/schemas/PlaylistLink'          
 
         '405':
           description: Invalid input    
@@ -249,6 +283,10 @@ components:
         thumbnail:
           type: string
           format: binary
+        extension:
+          type: string
+          format: string
+          example: mp3
         path:
           type: string
           format: string
@@ -258,6 +296,27 @@ components:
 
     PlaylistItemPost:
       type: object
+      properties:             
+        id:
+          type: string
+          format: string
+          description: The id of the item to Updates
+          example: 4979875A-A40E-4CC6-99AB-CB5CE62DA97C  
+        filename:
+          type: string
+          format: string
+          example: Bethoven_song
+        extension:
+          type: string
+          format: string
+          example: mp3                
+      required:
+        - filename 
+        - extension
+        - file
+
+    ItemPost:
+      type: object
       properties:                
         filename:
           type: string
@@ -266,15 +325,15 @@ components:
         extension:
           type: string
           format: string
-          example: mp3
-        fileData:
+          example: mp3        
+        file:
           type: string
-          format: binary          
-          example: base64 byte array
+          format: binary
+          description: File to upload
       required:
         - filename 
         - extension
-        - filedata
+        - file
 
     Playlist:
       type: object
@@ -317,7 +376,15 @@ components:
         href: 
           type: string
           format: string
-          example: "http://localhost/playlistapi/4979875A-A40E-4CC6-99AB-CB5CE62DA97C"        
+          example: "http://localhost/playlistapi/playlists/4979875A-A40E-4CC6-99AB-CB5CE62DA97C"        
+    
+    ItemLink:
+      type: object
+      properties:
+        href: 
+          type: string
+          format: string
+          example: "http://localhost/playlistapi/items/4979875A-A40E-4CC6-99AB-CB5CE62DA97C" 
 
     PlaylistUpdate:
       type: object
@@ -325,7 +392,7 @@ components:
         items: 
           type: array
           items:
-            $ref: '#/components/schemas/PlaylistItem'
+            $ref: '#/components/schemas/PlaylistItemPost'
 
     PlaylistPost:
       type: object
@@ -341,7 +408,7 @@ components:
         items: 
           type: array
           items:
-            $ref: '#/components/schemas/PlaylistItem'
+            $ref: '#/components/schemas/PlaylistItemPost'
 
     PlaylistInfo:
       type: object
