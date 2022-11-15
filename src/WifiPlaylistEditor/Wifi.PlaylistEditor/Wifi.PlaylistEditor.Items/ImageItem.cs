@@ -22,7 +22,7 @@ namespace Wifi.PlaylistEditor.Items
             if (!string.IsNullOrWhiteSpace(filePath)) ReadImageTags();
         }
 
-        public string Titel { get; set; }
+        public string Title { get; set; }
 
         public string Path
         {
@@ -37,8 +37,8 @@ namespace Wifi.PlaylistEditor.Items
         {
             var tfile = File.Create(_path);
 
-            Titel = tfile.Tag.Title;
-            if (string.IsNullOrWhiteSpace(Titel)) Titel = System.IO.Path.GetFileName(_path);
+            Title = tfile.Tag.Title;
+            if (string.IsNullOrWhiteSpace(Title)) Title = System.IO.Path.GetFileName(_path);
 
             Artist = tfile.Tag.FirstPerformer;
             if (string.IsNullOrWhiteSpace(Artist))
@@ -64,7 +64,7 @@ namespace Wifi.PlaylistEditor.Items
 
         public override string ToString()
         {
-            return Titel;
+            return Title;
         }
     }
 }

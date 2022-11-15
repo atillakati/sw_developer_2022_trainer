@@ -183,11 +183,11 @@ namespace Wifi.PlaylistEditor.Types.Test
             //arrange                        
             var mockedItem1 = new Mock<IPlaylistItem>();
             mockedItem1.Setup(x => x.Artist).Returns("David");
-            mockedItem1.Setup(x => x.Titel).Returns("Hello");
+            mockedItem1.Setup(x => x.Title).Returns("Hello");
 
             var mockedItem2 = new Mock<IPlaylistItem>();
             mockedItem2.Setup(x => x.Artist).Returns("David");
-            mockedItem2.Setup(x => x.Titel).Returns("Hello");
+            mockedItem2.Setup(x => x.Title).Returns("Hello");
 
             _fixture.Add(mockedItem1.Object);
             var currentCount = _fixture.ItemList.Count();
@@ -206,11 +206,11 @@ namespace Wifi.PlaylistEditor.Types.Test
             _fixture.AllowDuplicates = false;
             var mockedItem1 = new Mock<IPlaylistItem>();
             mockedItem1.Setup(x => x.Artist).Returns("David");
-            mockedItem1.Setup(x => x.Titel).Returns("Hello");
+            mockedItem1.Setup(x => x.Title).Returns("Hello");
 
             var mockedItem2 = new Mock<IPlaylistItem>();
             mockedItem2.Setup(x => x.Artist).Returns("David");
-            mockedItem2.Setup(x => x.Titel).Returns("Hello");
+            mockedItem2.Setup(x => x.Title).Returns("Hello");
 
             _fixture.Add(mockedItem1.Object);
             var currentCount = _fixture.ItemList.Count();
@@ -229,11 +229,11 @@ namespace Wifi.PlaylistEditor.Types.Test
             _fixture.AllowDuplicates = false;
             var mockedItem1 = new Mock<IPlaylistItem>();
             mockedItem1.Setup(x => x.Artist).Returns("Herman");
-            mockedItem1.Setup(x => x.Titel).Returns("Hello");
+            mockedItem1.Setup(x => x.Title).Returns("Hello");
 
             var mockedItem2 = new Mock<IPlaylistItem>();
             mockedItem2.Setup(x => x.Artist).Returns("David");
-            mockedItem2.Setup(x => x.Titel).Returns("Hello");
+            mockedItem2.Setup(x => x.Title).Returns("Hello");
 
             _fixture.Add(mockedItem1.Object);
             var currentCount = _fixture.ItemList.Count();
@@ -267,11 +267,11 @@ namespace Wifi.PlaylistEditor.Types.Test
             //arrange            
             var mockedItem1 = new Mock<IPlaylistItem>();
             mockedItem1.Setup(x => x.Artist).Returns("David");
-            mockedItem1.Setup(x => x.Titel).Returns("Hello");
+            mockedItem1.Setup(x => x.Title).Returns("Hello");
 
             var mockedItem2 = new Mock<IPlaylistItem>();
             mockedItem2.Setup(x => x.Artist).Returns("David");
-            mockedItem2.Setup(x => x.Titel).Returns("Hello");
+            mockedItem2.Setup(x => x.Title).Returns("Hello");
 
             _fixture.Add(mockedItem1.Object);
             _fixture.Add(mockedItem2.Object);            
@@ -293,7 +293,7 @@ namespace Wifi.PlaylistEditor.Types.Test
 
             var mockedItem = new Mock<IPlaylistItem>();
             mockedItem.Setup(x => x.Artist).Returns("David");
-            mockedItem.Setup(x => x.Titel).Returns("Hello");
+            mockedItem.Setup(x => x.Title).Returns("Hello");
             
             _fixture.Add(mockedItem.Object);
 

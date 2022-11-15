@@ -16,7 +16,7 @@ namespace Wifi.PlaylistEditor.Items
             ReadIdTags();
         }
 
-        public string Titel { get; set; }
+        public string Title { get; set; }
 
         public string Artist { get; set; }
 
@@ -30,7 +30,7 @@ namespace Wifi.PlaylistEditor.Items
         {
             var tfile = File.Create(Path);
 
-            Titel = tfile.Tag.Title;
+            Title = tfile.Tag.Title;
             Artist = tfile.Tag.FirstAlbumArtist;
             Duration = tfile.Properties.Duration;
 

@@ -6,7 +6,7 @@ namespace Wifi.PlaylistEditor.Types
 {
     public interface IPlaylistItem
     {
-        string Titel { get; set; }
+        string Title { get; set; }
 
         string Artist { get; set; }
 
