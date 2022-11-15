@@ -45,6 +45,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Wifi.PlaylistEditor.Factories\Wifi.PlaylistEditor.Factories.csproj">
+      <Project>{8DCAC088-04DA-4702-89BD-1EDBE968633A}</Project>
+      <Name>Wifi.PlaylistEditor.Factories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wifi.PlaylistEditor.Items\Wifi.PlaylistEditor.Items.csproj">
+      <Project>{6865D76B-1DF2-4E78-9F75-7001E1EE5479}</Project>
+      <Name>Wifi.PlaylistEditor.Items</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wifi.PlaylistEditor.Types\Wifi.PlaylistEditor.Types.csproj">
       <Project>{8d355cc7-7e2c-45eb-8ad7-184ee4e07982}</Project>
       <Name>Wifi.PlaylistEditor.Types</Name>
@@ -53,6 +61,12 @@
   <ItemGroup>
     <PackageReference Include="PlaylistsNET">
       <Version>1.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.IO.Abstractions">
+      <Version>17.2.3</Version>
+    </PackageReference>
+    <PackageReference Include="System.IO.Abstractions.TestingHelpers">
+      <Version>17.2.3</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

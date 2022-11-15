@@ -2,8 +2,12 @@
 using PlaylistsNET.Content;
 using PlaylistsNET.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
-
+using System.IO.Abstractions;
+using System.Runtime.InteropServices.ComTypes;
+using Wifi.PlaylistEditor.Factories;
+using Wifi.PlaylistEditor.Items;
 using Wifi.PlaylistEditor.Types;
 
 namespace Wifi.PlaylistEditor.Repositories
@@ -11,10 +15,21 @@ namespace Wifi.PlaylistEditor.Repositories
     public class M3uRepository : IRepository
     {
         private readonly string _extension;
+        private readonly IFileSystem _fileSystem;
+        private readonly IPlaylistItemFactory _playlistItemFactory;
 
-        public M3uRepository()
+        public M3uRepository(IPlaylistItemFactory playlistItemFactory)
+            : this(new FileSystem(), playlistItemFactory)
         {
-            _extension= ".m3u";
+            _extension = ".m3u";
+            _playlistItemFactory = playlistItemFactory;
+        }
+
+        public M3uRepository(IFileSystem fileSystem, IPlaylistItemFactory playlistItemFactory)
+        {
+            _fileSystem = fileSystem;
+            _playlistItemFactory = playlistItemFactory;
+            _extension = ".m3u";
         }
 
         public string Extension => _extension;
@@ -23,7 +38,22 @@ namespace Wifi.PlaylistEditor.Repositories
 
         public IPlaylist Load(string playlistFilePath)
         {
-            throw new NotImplementedException();
+            var stream = _fileSystem.File.OpenRead(playlistFilePath);
+
+            var parser = PlaylistParserFactory.GetPlaylistParser(_extension);
+            IBasePlaylist playlist = parser.GetFromStream(stream);
+
+            var myPlaylist = new Playlist("M3UPlaylist","WifiPlaylistEditor");
+
+            //add items
+            var paths = playlist.GetTracksPaths();
+            foreach (var itemPath in paths)
+            {
+                var item = _playlistItemFactory.Create(itemPath);
+                myPlaylist.Add(item);
+            }
+
+            return myPlaylist;
         }
 
         public void Save(IPlaylist playlist, string playlistFilePath)
@@ -48,11 +78,8 @@ namespace Wifi.PlaylistEditor.Repositories
 
             M3uContent content = new M3uContent();
             string text = content.ToText(m3uPlaylist);
-
-            using(var sw = new StreamWriter(playlistFilePath, false)) 
-            {
-                sw.WriteLine(text);
-            }
+            
+            _fileSystem.File.WriteAllText(playlistFilePath, text);            
         }
     }
 }
