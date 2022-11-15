@@ -5,6 +5,9 @@ namespace Wifi.PlaylistEditor.Types
 {
     public interface IPlaylist
     {
+        /// <summary>
+        /// This should be described!
+        /// </summary>
         string Name { get; set; }
         string Author { get; set; }
         DateTime CreateAt { get; }
