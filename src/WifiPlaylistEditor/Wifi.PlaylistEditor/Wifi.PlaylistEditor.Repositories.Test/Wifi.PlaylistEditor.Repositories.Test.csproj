@@ -62,6 +62,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Wifi.PlaylistEditor.Factories\Wifi.PlaylistEditor.Factories.csproj">
+      <Project>{8DCAC088-04DA-4702-89BD-1EDBE968633A}</Project>
+      <Name>Wifi.PlaylistEditor.Factories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wifi.PlaylistEditor.Repositories\Wifi.PlaylistEditor.Repositories.csproj">
       <Project>{ef329878-de6b-4a8f-b2d6-6378f1587a82}</Project>
       <Name>Wifi.PlaylistEditor.Repositories</Name>

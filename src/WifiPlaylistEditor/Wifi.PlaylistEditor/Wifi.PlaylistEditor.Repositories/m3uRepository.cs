@@ -1,13 +1,7 @@
-﻿
-using PlaylistsNET.Content;
+﻿using PlaylistsNET.Content;
 using PlaylistsNET.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.IO.Abstractions;
-using System.Runtime.InteropServices.ComTypes;
 using Wifi.PlaylistEditor.Factories;
-using Wifi.PlaylistEditor.Items;
 using Wifi.PlaylistEditor.Types;
 
 namespace Wifi.PlaylistEditor.Repositories
@@ -38,6 +32,11 @@ namespace Wifi.PlaylistEditor.Repositories
 
         public IPlaylist Load(string playlistFilePath)
         {
+            if (string.IsNullOrEmpty(playlistFilePath))
+            {
+                return null;
+            }
+
             var stream = _fileSystem.File.OpenRead(playlistFilePath);
 
             var parser = PlaylistParserFactory.GetPlaylistParser(_extension);
