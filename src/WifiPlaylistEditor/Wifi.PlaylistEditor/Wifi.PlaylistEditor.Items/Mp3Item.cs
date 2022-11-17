@@ -10,6 +10,11 @@ namespace Wifi.PlaylistEditor.Items
     {
         //"C:\Users\User\Music\001 - Bruno Mars - Grenade.mp3"
 
+        /// <summary>
+        /// Creates a dummy Mp3Item instance with no tag information
+        /// </summary>
+        public Mp3Item() { }
+
         public Mp3Item(string filePath)
         {
             Path = filePath;
@@ -26,8 +31,12 @@ namespace Wifi.PlaylistEditor.Items
 
         public Image Thumbnail { get; set; }
 
+        public string Extension => ".mp3";
+
+        public string Description => "MP3 Music File";
+
         private void ReadIdTags()
-        {
+        {            
             var tfile = File.Create(Path);
 
             Title = tfile.Tag.Title;

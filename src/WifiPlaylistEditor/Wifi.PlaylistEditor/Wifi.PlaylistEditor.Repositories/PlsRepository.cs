@@ -1,7 +1,6 @@
 ﻿using PlaylistsNET.Content;
 using PlaylistsNET.Models;
 using System.IO.Abstractions;
-using Wifi.PlaylistEditor.Factories;
 using Wifi.PlaylistEditor.Types;
 
 namespace Wifi.PlaylistEditor.Repositories

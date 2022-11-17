@@ -46,10 +46,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Wifi.PlaylistEditor.Factories\Wifi.PlaylistEditor.Factories.csproj">
-      <Project>{8DCAC088-04DA-4702-89BD-1EDBE968633A}</Project>
-      <Name>Wifi.PlaylistEditor.Factories</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Wifi.PlaylistEditor.Items\Wifi.PlaylistEditor.Items.csproj">
       <Project>{6865D76B-1DF2-4E78-9F75-7001E1EE5479}</Project>
       <Name>Wifi.PlaylistEditor.Items</Name>

@@ -1,7 +1,6 @@
 ﻿using PlaylistsNET.Content;
 using PlaylistsNET.Models;
 using System.IO.Abstractions;
-using Wifi.PlaylistEditor.Factories;
 using Wifi.PlaylistEditor.Types;
 
 namespace Wifi.PlaylistEditor.Repositories
@@ -49,7 +48,10 @@ namespace Wifi.PlaylistEditor.Repositories
             foreach (var itemPath in paths)
             {
                 var item = _playlistItemFactory.Create(itemPath);
-                myPlaylist.Add(item);
+                if (item != null)
+                {
+                    myPlaylist.Add(item);
+                }
             }
 
             return myPlaylist;

@@ -10,6 +10,9 @@ namespace Wifi.PlaylistEditor.Items
     {
         private string _path;
 
+        /// <summary>
+        /// Creates a dummy ImageItem instance with no tag information
+        /// </summary>
         public ImageItem()
         {
             _path = string.Empty;
@@ -32,6 +35,10 @@ namespace Wifi.PlaylistEditor.Items
         public string Artist { get; set; }
         public Image Thumbnail { get; set; }
         public TimeSpan Duration { get; set; }
+
+        public string Extension => ".jpg";
+
+        public string Description => "JPG Image File";
 
         private void ReadImageTags()
         {
