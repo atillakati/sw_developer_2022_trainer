@@ -42,9 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IFileDescription.cs" />
     <Compile Include="IPlalylistItem.cs" />
     <Compile Include="IPlaylist.cs" />
+    <Compile Include="IPlaylistItemFactory.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="IRepositoryFactory.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

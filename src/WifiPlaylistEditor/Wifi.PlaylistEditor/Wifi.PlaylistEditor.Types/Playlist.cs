@@ -76,7 +76,7 @@ namespace Wifi.PlaylistEditor.Types
 
             if (!_allowDuplicates)
             {
-                addNewItem = !_itemList.Any(x => x.Artist == itemToAdd.Artist && x.Titel == itemToAdd.Titel);
+                addNewItem = !_itemList.Any(x => x.Artist == itemToAdd.Artist && x.Title == itemToAdd.Title);
             }
 
             if (addNewItem)
