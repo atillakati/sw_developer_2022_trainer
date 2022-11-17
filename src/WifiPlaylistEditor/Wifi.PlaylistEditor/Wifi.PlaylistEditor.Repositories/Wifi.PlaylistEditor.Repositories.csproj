@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Json\ItemEntity.cs" />
+    <Compile Include="Json\JsonExtensions.cs" />
+    <Compile Include="Json\JsonRepository.cs" />
+    <Compile Include="Json\PlaylistEntity.cs" />
     <Compile Include="PlsRepository.cs" />
     <Compile Include="M3uRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,6 +60,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
     <PackageReference Include="PlaylistsNET">
       <Version>1.2.1</Version>
     </PackageReference>
@@ -66,5 +73,6 @@
       <Version>17.2.3</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
