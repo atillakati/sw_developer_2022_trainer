@@ -1,30 +1,69 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO.Abstractions;
 using Wifi.PlaylistEditor.Types;
 
 namespace Wifi.PlaylistEditor.Repositories.Json
 {
     public class JsonRepository : IRepository
     {
+        private readonly IFileSystem _fileSystem;
+        private readonly IPlaylistItemFactory _playlistItemFactory;
+
+        public JsonRepository(IPlaylistItemFactory playlistItemFactory) 
+            : this(new FileSystem(), playlistItemFactory) {   }
+
+        public JsonRepository(IFileSystem fileSystem, IPlaylistItemFactory playlistItemFactory)
+        {
+            _fileSystem = fileSystem;
+            _playlistItemFactory = playlistItemFactory;
+        }
+
         public string Extension => ".json";
 
         public string Description => "Wifi playlist format";
 
         public IPlaylist Load(string playlistFilePath)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(playlistFilePath) || !_fileSystem.File.Exists(playlistFilePath))
+            {
+                return null;
+            }
+
+            //open file and read content
+            var json = _fileSystem.File.ReadAllText(playlistFilePath);
+
+            //convert json text to entity object (deserialize)
+            var entity = JsonConvert.DeserializeObject<PlaylistEntity>(json);
+
+            //convert entity object to domain object
+            var playlist = entity.ToDomain(_playlistItemFactory);
+
+            return playlist;
         }
 
         public void Save(IPlaylist playlist, string playlistFilePath)
         {
+            if (playlist == null || string.IsNullOrEmpty(playlistFilePath))
+            {
+                return;
+            }
+
+            //convert domain object into json spezific enities
             var entity = playlist.ToEntity();
 
+            //convert entity object to json text (serialize)
             string json = JsonConvert.SerializeObject(entity);
 
+            //create file
+            try
+            {
+                _fileSystem.File.WriteAllText(playlistFilePath, json);
+            }
+            catch (Exception ex)
+            {
+                //create log entries
+            }
         }
     }
 }
