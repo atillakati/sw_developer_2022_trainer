@@ -2,13 +2,11 @@
 using System;
 using System.IO;
 using System.IO.Abstractions;
-using System.Text;
 using Wifi.PlaylistEditor.Repositories.Json;
 using Wifi.PlaylistEditor.Types;
 
 namespace Wifi.PlaylistEditor.Repositories
 {
-
     public class JsonRepository : IRepository
     {
         private readonly IFileSystem _fileSystem;
@@ -37,9 +35,9 @@ namespace Wifi.PlaylistEditor.Repositories
             //open file and read content
             string json = string.Empty;
             var jsonStream = _fileSystem.File.OpenRead(playlistFilePath);
-            using(var sw = new StreamReader(jsonStream, Encoding.UTF8))
+            using(var sr = new StreamReader(jsonStream))
             {
-                json = sw.ReadToEnd();
+                json = sr.ReadToEnd();
             }
 
             //convert json text to entity object (deserialize)
