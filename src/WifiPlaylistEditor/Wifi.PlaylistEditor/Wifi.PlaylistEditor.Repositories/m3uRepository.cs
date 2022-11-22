@@ -13,9 +13,7 @@ namespace Wifi.PlaylistEditor.Repositories
 
         public M3uRepository(IPlaylistItemFactory playlistItemFactory)
             : this(new FileSystem(), playlistItemFactory)
-        {
-            _extension = ".m3u";
-            _playlistItemFactory = playlistItemFactory;
+        {            
         }
 
         public M3uRepository(IFileSystem fileSystem, IPlaylistItemFactory playlistItemFactory)

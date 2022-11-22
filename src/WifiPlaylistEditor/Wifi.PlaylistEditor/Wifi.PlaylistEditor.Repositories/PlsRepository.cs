@@ -13,9 +13,7 @@ namespace Wifi.PlaylistEditor.Repositories
 
         public PlsRepository(IPlaylistItemFactory playlistItemFactory)
             : this(new FileSystem(), playlistItemFactory)
-        {
-            _extension = ".pls";
-            _playlistItemFactory = playlistItemFactory;
+        {            
         }
 
         public PlsRepository(IFileSystem fileSystem, IPlaylistItemFactory playlistItemFactory)
@@ -41,7 +39,7 @@ namespace Wifi.PlaylistEditor.Repositories
             var parser = PlaylistParserFactory.GetPlaylistParser(_extension);
             IBasePlaylist playlist = parser.GetFromStream(stream);
 
-            var myPlaylist = new Playlist("PLSPlaylist","WifiPlaylistEditor");
+            var myPlaylist = new Playlist("PLSPlaylist", "WifiPlaylistEditor");
 
             //add items
             var paths = playlist.GetTracksPaths();
@@ -56,17 +54,17 @@ namespace Wifi.PlaylistEditor.Repositories
 
         public void Save(IPlaylist playlist, string playlistFilePath)
         {
-            if(playlist == null || string.IsNullOrEmpty(playlistFilePath))  
+            if (playlist == null || string.IsNullOrEmpty(playlistFilePath))
             {
                 return;
             }
 
-            var plsPlaylist = new PlsPlaylist();            
+            var plsPlaylist = new PlsPlaylist();
 
             foreach (var item in playlist.ItemList)
             {
                 plsPlaylist.PlaylistEntries.Add(new PlsPlaylistEntry()
-                {                                        
+                {
                     Length = item.Duration,
                     Path = item.Path,
                     Title = item.Title
@@ -75,8 +73,8 @@ namespace Wifi.PlaylistEditor.Repositories
 
             var content = new PlsContent();
             string text = content.ToText(plsPlaylist);
-            
-            _fileSystem.File.WriteAllText(playlistFilePath, text);            
+
+            _fileSystem.File.WriteAllText(playlistFilePath, text);
         }
     }
 }
