@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="M3uRepositoryTests - Copy.cs" />
     <Compile Include="PlsRepositoryTests.cs" />
     <Compile Include="M3uRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

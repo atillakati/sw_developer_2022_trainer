@@ -4,12 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
-using System.IO.Abstractions.TestingHelpers;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Contexts;
 using System.Text;
-using System.Threading.Tasks;
 using Wifi.PlaylistEditor.Types;
 
 namespace Wifi.PlaylistEditor.Repositories.Test
@@ -134,7 +130,8 @@ namespace Wifi.PlaylistEditor.Repositories.Test
         {
             //Arrange    
             var mockedFile = new Mock<IFile>();
-            mockedFile.Setup(x => x.OpenRead(It.IsAny<string>())).Returns(new MemoryStream(Encoding.UTF8.GetBytes(_referenceContent)));                      
+            mockedFile.Setup(x => x.OpenRead("demoplaylist.m3u")).Returns(new MemoryStream(Encoding.UTF8.GetBytes(_referenceContent)));
+            mockedFile.Setup(x => x.Exists("demoplaylist.m3u")).Returns(true);
 
             _mockedFileSystem = new Mock<IFileSystem>();
             _mockedFileSystem.Setup(x => x.File).Returns(mockedFile.Object);
@@ -152,31 +149,13 @@ namespace Wifi.PlaylistEditor.Repositories.Test
         }
 
         [Test]
-        public void Load_PlaylistpathIsEmpty()
+        [TestCaseSource(nameof(LoadTestCases))]
+        public void Load_WithTestData(int testNr, string data)
         {
             //Arrange            
             var mockedFile = new Mock<IFile>();
             mockedFile.Setup(x => x.OpenRead(It.IsAny<string>())).Returns(new MemoryStream(Encoding.UTF8.GetBytes(_referenceContent)));
-
-            _mockedFileSystem = new Mock<IFileSystem>();
-            _mockedFileSystem.Setup(x => x.File).Returns(mockedFile.Object);            
-
-            _fixture = new M3uRepository(_mockedFileSystem.Object, _mockedPlaylistItemFactory.Object);
-
-            //act
-            var playlist = _fixture.Load(string.Empty);
-
-            //assert
-            Assert.That(playlist, Is.Null);
-            mockedFile.Verify(x => x.OpenRead(It.IsAny<string>()), Times.Never);
-        }
-
-        [Test]
-        public void Load_PlaylistpathIsNull()
-        {
-            //Arrange            
-            var mockedFile = new Mock<IFile>();
-            mockedFile.Setup(x => x.OpenRead(It.IsAny<string>())).Returns(new MemoryStream(Encoding.UTF8.GetBytes(_referenceContent)));
+            mockedFile.Setup(x => x.Exists(It.IsAny<string>())).Returns(false);
 
             _mockedFileSystem = new Mock<IFileSystem>();
             _mockedFileSystem.Setup(x => x.File).Returns(mockedFile.Object);
@@ -184,11 +163,21 @@ namespace Wifi.PlaylistEditor.Repositories.Test
             _fixture = new M3uRepository(_mockedFileSystem.Object, _mockedPlaylistItemFactory.Object);
 
             //act
-            var playlist = _fixture.Load(null);
+            var playlist = _fixture.Load(data);
 
             //assert
             Assert.That(playlist, Is.Null);
             mockedFile.Verify(x => x.OpenRead(It.IsAny<string>()), Times.Never);
+        }
+
+        public static IEnumerable<object> LoadTestCases()
+        {
+            return new object[]
+            {
+                new object[]{ 1, string.Empty},
+                new object[]{ 2, null},
+                new object[]{ 3, @"p:\09384523\04958"},
+            };
         }
 
         private Mock<IPlaylistItemFactory> CreateMockedPlaylistItemFactory()

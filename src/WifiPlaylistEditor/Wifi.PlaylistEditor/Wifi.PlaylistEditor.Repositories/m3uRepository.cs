@@ -31,7 +31,7 @@ namespace Wifi.PlaylistEditor.Repositories
 
         public IPlaylist Load(string playlistFilePath)
         {
-            if (string.IsNullOrEmpty(playlistFilePath))
+            if (string.IsNullOrEmpty(playlistFilePath) || !_fileSystem.File.Exists(playlistFilePath))
             {
                 return null;
             }
