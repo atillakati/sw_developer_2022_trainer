@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="Json\ItemEntity.cs" />
     <Compile Include="Json\JsonExtensions.cs" />
-    <Compile Include="Json\JsonRepository.cs" />
+    <Compile Include="JsonRepository.cs" />
     <Compile Include="Json\PlaylistEntity.cs" />
     <Compile Include="PlsRepository.cs" />
     <Compile Include="M3uRepository.cs" />

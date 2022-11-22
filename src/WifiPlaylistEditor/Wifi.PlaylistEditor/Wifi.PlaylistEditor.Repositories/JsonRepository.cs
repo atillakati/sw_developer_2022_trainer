@@ -1,17 +1,19 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.IO.Abstractions;
+using Wifi.PlaylistEditor.Repositories.Json;
 using Wifi.PlaylistEditor.Types;
 
-namespace Wifi.PlaylistEditor.Repositories.Json
+namespace Wifi.PlaylistEditor.Repositories
 {
     public class JsonRepository : IRepository
     {
         private readonly IFileSystem _fileSystem;
         private readonly IPlaylistItemFactory _playlistItemFactory;
 
-        public JsonRepository(IPlaylistItemFactory playlistItemFactory) 
-            : this(new FileSystem(), playlistItemFactory) {   }
+        public JsonRepository(IPlaylistItemFactory playlistItemFactory)
+            : this(new FileSystem(), playlistItemFactory) { }
 
         public JsonRepository(IFileSystem fileSystem, IPlaylistItemFactory playlistItemFactory)
         {
@@ -31,7 +33,12 @@ namespace Wifi.PlaylistEditor.Repositories.Json
             }
 
             //open file and read content
-            var json = _fileSystem.File.ReadAllText(playlistFilePath);
+            string json = string.Empty;
+            var jsonStream = _fileSystem.File.OpenRead(playlistFilePath);
+            using(var sr = new StreamReader(jsonStream))
+            {
+                json = sr.ReadToEnd();
+            }
 
             //convert json text to entity object (deserialize)
             var entity = JsonConvert.DeserializeObject<PlaylistEntity>(json);
