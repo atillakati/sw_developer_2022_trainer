@@ -31,7 +31,8 @@ namespace Wifi.PlaylistEditor.Factories
             _availableTypes = new List<IRepository>() 
             {
                 new M3uRepository(_fileSystem, _playlistItemFactory),
-                new PlsRepository(_fileSystem, _playlistItemFactory)
+                new PlsRepository(_fileSystem, _playlistItemFactory),
+                new JsonRepository(_fileSystem, _playlistItemFactory),
             };  
         }
 
