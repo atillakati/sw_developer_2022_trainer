@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
 using Wifi.PlaylistEditor.Types;
 
 namespace Wifi.PlaylistEditor.Repositories.Json
 {
     internal static class JsonExtensions
     {
-        public static IPlaylist ToDomain(this PlaylistEntity playlistEntity, IPlaylistItemFactory playlistItemFactory)
+        public static IPlaylist ToDomain(this PlaylistEntity playlistEntity, IPlaylistFactory playlistFactory, IPlaylistItemFactory playlistItemFactory)
         {
-            var playlist = new Playlist(playlistEntity.title, 
+            if(playlistEntity == null || playlistFactory == null || playlistItemFactory == null)
+            {
+                return null;
+            }
+
+            var playlist = playlistFactory.Create(playlistEntity.title, 
                                         playlistEntity.author, 
                                         DateTime.ParseExact(playlistEntity.createdAt, "yyyy-MM-dd", CultureInfo.InvariantCulture));
 
@@ -31,7 +33,7 @@ namespace Wifi.PlaylistEditor.Repositories.Json
 
         public static IEnumerable<ItemEntity> ToEntity(this IEnumerable<IPlaylistItem> playlistItems)
         {
-            return playlistItems.Select(x => new ItemEntity { path = x.Path });            
+            return playlistItems?.Select(x => new ItemEntity { path = x.Path });            
         }
 
         public static PlaylistEntity ToEntity(this IPlaylist playlist)
