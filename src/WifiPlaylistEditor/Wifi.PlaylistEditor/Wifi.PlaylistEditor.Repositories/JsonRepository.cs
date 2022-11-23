@@ -10,14 +10,16 @@ namespace Wifi.PlaylistEditor.Repositories
     public class JsonRepository : IRepository
     {
         private readonly IFileSystem _fileSystem;
+        private readonly IPlaylistFactory _playlistFactory;
         private readonly IPlaylistItemFactory _playlistItemFactory;
 
-        public JsonRepository(IPlaylistItemFactory playlistItemFactory)
-            : this(new FileSystem(), playlistItemFactory) { }
+        public JsonRepository(IPlaylistFactory playlistFactory, IPlaylistItemFactory playlistItemFactory)
+            : this(new FileSystem(), playlistFactory, playlistItemFactory) { }
 
-        public JsonRepository(IFileSystem fileSystem, IPlaylistItemFactory playlistItemFactory)
+        public JsonRepository(IFileSystem fileSystem, IPlaylistFactory playlistFactory, IPlaylistItemFactory playlistItemFactory)
         {
             _fileSystem = fileSystem;
+            _playlistFactory = playlistFactory;
             _playlistItemFactory = playlistItemFactory;
         }
 
@@ -44,7 +46,7 @@ namespace Wifi.PlaylistEditor.Repositories
             var entity = JsonConvert.DeserializeObject<PlaylistEntity>(json);
 
             //convert entity object to domain object
-            var playlist = entity.ToDomain(_playlistItemFactory);
+            var playlist = entity.ToDomain(_playlistFactory, _playlistItemFactory);
 
             return playlist;
         }

@@ -1,5 +1,6 @@
 ﻿using PlaylistsNET.Content;
 using PlaylistsNET.Models;
+using System;
 using System.IO.Abstractions;
 using Wifi.PlaylistEditor.Types;
 
@@ -9,16 +10,18 @@ namespace Wifi.PlaylistEditor.Repositories
     {
         private readonly string _extension;
         private readonly IFileSystem _fileSystem;
+        private readonly IPlaylistFactory _playlistFactory;
         private readonly IPlaylistItemFactory _playlistItemFactory;
 
-        public M3uRepository(IPlaylistItemFactory playlistItemFactory)
-            : this(new FileSystem(), playlistItemFactory)
+        public M3uRepository(IPlaylistFactory playlistFactory, IPlaylistItemFactory playlistItemFactory)
+            : this(new FileSystem(), playlistFactory, playlistItemFactory)
         {            
         }
 
-        public M3uRepository(IFileSystem fileSystem, IPlaylistItemFactory playlistItemFactory)
+        public M3uRepository(IFileSystem fileSystem, IPlaylistFactory playlistFactory, IPlaylistItemFactory playlistItemFactory)
         {
             _fileSystem = fileSystem;
+            _playlistFactory = playlistFactory;
             _playlistItemFactory = playlistItemFactory;
             _extension = ".m3u";
         }
@@ -39,7 +42,7 @@ namespace Wifi.PlaylistEditor.Repositories
             var parser = PlaylistParserFactory.GetPlaylistParser(_extension);
             IBasePlaylist playlist = parser.GetFromStream(stream);
 
-            var myPlaylist = new Playlist("M3UPlaylist","WifiPlaylistEditor");
+            var myPlaylist = _playlistFactory.Create("M3UPlaylist","WifiPlaylistEditor", DateTime.Now);
 
             //add items
             var paths = playlist.GetTracksPaths();

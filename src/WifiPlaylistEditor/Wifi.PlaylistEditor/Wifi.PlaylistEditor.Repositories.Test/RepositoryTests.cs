@@ -1,10 +1,12 @@
 ﻿using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using Wifi.PlaylistEditor.Types;
 
@@ -20,6 +22,7 @@ namespace Wifi.PlaylistEditor.Repositories.Test
     {
         private Mock<IPlaylistItemFactory> _mockedPlaylistItemFactory;
         private Mock<IFileSystem> _mockedFileSystem;
+        private Mock<IPlaylistFactory> _mockedPlaylistFactory;
         private IRepository _fixture;
         private Mock<IPlaylist> _mockedPlaylist;
 
@@ -37,12 +40,15 @@ namespace Wifi.PlaylistEditor.Repositories.Test
         [SetUp]
         public void Init()
         {
-            _mockedPlaylistItemFactory = new Mock<IPlaylistItemFactory>();
+            _mockedPlaylistFactory = new Mock<IPlaylistFactory>();
+            _mockedPlaylistFactory.Setup(x => x.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()))                
+                .Returns<string, string, DateTime>( (title, author, createDate) => new Playlist(title, author, createDate));
 
+            _mockedPlaylistItemFactory = new Mock<IPlaylistItemFactory>();
             _mockedFileSystem = new Mock<IFileSystem>();
 
             _fixture = (T)Activator.CreateInstance(typeof(T), 
-                new object[] { _mockedFileSystem.Object, _mockedPlaylistItemFactory.Object });            
+                new object[] { _mockedFileSystem.Object, _mockedPlaylistFactory.Object, _mockedPlaylistItemFactory.Object });            
 
             var mockedItem1 = new Mock<IPlaylistItem>();
             mockedItem1.Setup(x => x.Title).Returns("Demo Song 1");
@@ -97,7 +103,7 @@ namespace Wifi.PlaylistEditor.Repositories.Test
             _mockedFileSystem.Setup(x => x.File).Returns(mockedFile.Object);
 
             _fixture = (T)Activator.CreateInstance(typeof(T),
-                new object[] { _mockedFileSystem.Object, _mockedPlaylistItemFactory.Object });
+                new object[] { _mockedFileSystem.Object, _mockedPlaylistFactory.Object, _mockedPlaylistItemFactory.Object });
 
             //Act
             _fixture.Save(_mockedPlaylist.Object, @"c:\temp\meinePlaylist" + _refExtension);
@@ -122,7 +128,7 @@ namespace Wifi.PlaylistEditor.Repositories.Test
             _mockedFileSystem.Setup(x => x.File).Returns(mockedFile.Object);
 
             _fixture = (T)Activator.CreateInstance(typeof(T),
-                new object[] { _mockedFileSystem.Object, _mockedPlaylistItemFactory.Object });
+                new object[] { _mockedFileSystem.Object, _mockedPlaylistFactory.Object, _mockedPlaylistItemFactory.Object });
 
             //Act
             _fixture.Save(_mockedPlaylist.Object, string.Empty);
@@ -157,7 +163,7 @@ namespace Wifi.PlaylistEditor.Repositories.Test
             _mockedPlaylistItemFactory = CreateMockedPlaylistItemFactory();
 
             _fixture = (T)Activator.CreateInstance(typeof(T),
-                new object[] { _mockedFileSystem.Object, _mockedPlaylistItemFactory.Object });
+                new object[] { _mockedFileSystem.Object, _mockedPlaylistFactory.Object, _mockedPlaylistItemFactory.Object });
 
             //act
             var playlist = _fixture.Load("demoplaylist" + _refExtension);
@@ -180,7 +186,7 @@ namespace Wifi.PlaylistEditor.Repositories.Test
             _mockedFileSystem.Setup(x => x.File).Returns(mockedFile.Object);
 
             _fixture = (T)Activator.CreateInstance(typeof(T),
-                new object[] { _mockedFileSystem.Object, _mockedPlaylistItemFactory.Object });
+                new object[] { _mockedFileSystem.Object, _mockedPlaylistFactory.Object, _mockedPlaylistItemFactory.Object });
 
             //act
             var playlist = _fixture.Load(data);

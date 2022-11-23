@@ -1,5 +1,6 @@
 ﻿using PlaylistsNET.Content;
 using PlaylistsNET.Models;
+using System;
 using System.IO.Abstractions;
 using Wifi.PlaylistEditor.Types;
 
@@ -9,16 +10,18 @@ namespace Wifi.PlaylistEditor.Repositories
     {
         private readonly string _extension;
         private readonly IFileSystem _fileSystem;
+        private readonly IPlaylistFactory _playlistFactory;
         private readonly IPlaylistItemFactory _playlistItemFactory;
 
-        public PlsRepository(IPlaylistItemFactory playlistItemFactory)
-            : this(new FileSystem(), playlistItemFactory)
+        public PlsRepository(IPlaylistFactory playlistFactory, IPlaylistItemFactory playlistItemFactory)
+            : this(new FileSystem(), playlistFactory, playlistItemFactory)
         {            
         }
 
-        public PlsRepository(IFileSystem fileSystem, IPlaylistItemFactory playlistItemFactory)
+        public PlsRepository(IFileSystem fileSystem, IPlaylistFactory playlistFactory, IPlaylistItemFactory playlistItemFactory)
         {
             _fileSystem = fileSystem;
+            _playlistFactory = playlistFactory;
             _playlistItemFactory = playlistItemFactory;
             _extension = ".pls";
         }
@@ -39,7 +42,7 @@ namespace Wifi.PlaylistEditor.Repositories
             var parser = PlaylistParserFactory.GetPlaylistParser(_extension);
             IBasePlaylist playlist = parser.GetFromStream(stream);
 
-            var myPlaylist = new Playlist("PLSPlaylist", "WifiPlaylistEditor");
+            var myPlaylist = _playlistFactory.Create("PLSPlaylist", "WifiPlaylistEditor", DateTime.Now);
 
             //add items
             var paths = playlist.GetTracksPaths();

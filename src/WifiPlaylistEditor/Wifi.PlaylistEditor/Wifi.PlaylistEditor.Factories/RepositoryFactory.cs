@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wifi.PlaylistEditor.Items;
 using Wifi.PlaylistEditor.Repositories;
 using Wifi.PlaylistEditor.Types;
 
@@ -14,25 +10,27 @@ namespace Wifi.PlaylistEditor.Factories
     public class RepositoryFactory : IRepositoryFactory
     {
         private readonly IFileSystem _fileSystem;
+        private readonly IPlaylistFactory _playlistFactory;
         private readonly IPlaylistItemFactory _playlistItemFactory;
         private List<IRepository> _availableTypes;
 
-        public RepositoryFactory(IPlaylistItemFactory playlistItemFactory)
-            : this(new FileSystem(), playlistItemFactory)
+        public RepositoryFactory(IPlaylistFactory playlistFactory, IPlaylistItemFactory playlistItemFactory)
+            : this(new FileSystem(), playlistFactory, playlistItemFactory)
         {
             
         }
 
-        public RepositoryFactory(IFileSystem fileSystem, IPlaylistItemFactory playlistItemFactory)
+        public RepositoryFactory(IFileSystem fileSystem, IPlaylistFactory playlistFactory, IPlaylistItemFactory playlistItemFactory)
         {
             _playlistItemFactory = playlistItemFactory;
             _fileSystem = fileSystem;
+            _playlistFactory = playlistFactory;
 
             _availableTypes = new List<IRepository>() 
             {
-                new M3uRepository(_fileSystem, _playlistItemFactory),
-                new PlsRepository(_fileSystem, _playlistItemFactory),
-                new JsonRepository(_fileSystem, _playlistItemFactory),
+                new M3uRepository(_fileSystem, _playlistFactory, _playlistItemFactory),
+                new PlsRepository(_fileSystem, _playlistFactory, _playlistItemFactory),
+                new JsonRepository(_fileSystem, _playlistFactory, _playlistItemFactory),
             };  
         }
 
