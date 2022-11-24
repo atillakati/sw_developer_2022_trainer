@@ -40,7 +40,7 @@ namespace Wifi.PlaylistEditor.Items
             var tfile = File.Create(Path);
 
             Title = tfile.Tag.Title;
-            Artist = tfile.Tag.FirstAlbumArtist;
+            Artist = tfile.Tag.FirstPerformer;
             Duration = tfile.Properties.Duration;
 
             if (tfile.Tag.Pictures != null && tfile.Tag.Pictures.Length > 0)
