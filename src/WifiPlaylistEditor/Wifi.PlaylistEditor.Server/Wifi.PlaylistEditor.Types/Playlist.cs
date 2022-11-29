@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Wifi.PlaylistEditor.Types
+﻿namespace Wifi.PlaylistEditor.Types
 {
     public class Playlist : IPlaylist
     {
@@ -14,14 +7,17 @@ namespace Wifi.PlaylistEditor.Types
         private string _author;
         private DateTime _createAt;
         private bool _allowDuplicates;
+        private Guid _id;
 
         public Playlist(string name, string author)
-            : this(name, author, DateTime.Now)
-        {
-        }
+            : this(Guid.NewGuid(), name, author, DateTime.Now) { }
 
         public Playlist(string name, string author, DateTime createAt)
+            : this(Guid.NewGuid(), name, author, createAt) { }
+
+        public Playlist(Guid id, string name, string author, DateTime createAt)
         {
+            _id = id;
             _name = name;
             _author = author;
             _createAt = createAt;
@@ -64,6 +60,8 @@ namespace Wifi.PlaylistEditor.Types
         {
             get { return _itemList; }
         }
+
+        public Guid Id { get => _id; }
 
         public void Add(IPlaylistItem itemToAdd)
         {

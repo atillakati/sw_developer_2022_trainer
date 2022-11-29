@@ -3,11 +3,13 @@
     public interface IFileDescription
     {
         /// <summary>
-        /// Die Dateiextension die verwendet werden soll für das jeweilige Playlist/-item Format.
-        /// zb: .m3u oder .mp3
+        /// Contains the default description of the file. eg: .mp3 or .m3u
         /// </summary>
         string Extension { get; }
 
+        /// <summary>
+        /// Contains a brief description of the filetype
+        /// </summary>
         string Description { get; }
     }
 }

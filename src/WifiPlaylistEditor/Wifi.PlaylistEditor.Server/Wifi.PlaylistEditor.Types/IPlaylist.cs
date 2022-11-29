@@ -5,6 +5,8 @@ namespace Wifi.PlaylistEditor.Types
 {
     public interface IPlaylist
     {
+        Guid Id { get; }
+
         /// <summary>
         /// This should be described!
         /// </summary>

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Wifi.PlaylistEditor.Repositories\Wifi.PlaylistEditor.Repositories.csproj" />
     <ProjectReference Include="..\Wifi.PlaylistEditor.Types\Wifi.PlaylistEditor.Types.csproj" />
   </ItemGroup>
 
