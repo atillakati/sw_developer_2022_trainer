@@ -12,9 +12,9 @@ using Wifi.PlaylistEditor.Types;
 
 namespace Wifi.PlaylistEditor.Repositories.Test
 {
-    [TestFixture(typeof(M3uRepository),".m3u", "M3U Playlist file",
+    [TestFixture(typeof(M3uRepository), ".m3u", "M3U Playlist file",
         "#EXTM3U\r\n#EXTINF:100,Demo Song 1\r\nc:\\myMusic\\Demo Song 1.mp3\r\n#EXTINF:120,Super Song\r\nc:\\myMusic\\SuperDuperSong2.mp3")]
-    [TestFixture(typeof(PlsRepository),".pls", "PLS Playlist file",
+    [TestFixture(typeof(PlsRepository), ".pls", "PLS Playlist file",
         "[playlist]\r\n\r\nFile1=c:\\myMusic\\Demo Song 1.mp3\r\nTitle1=Demo Song 1\r\nLength1=100\r\n\r\nFile2=c:\\myMusic\\SuperDuperSong2.mp3\r\nTitle2=Super Song\r\nLength2=120\r\n\r\nNumberOfEntries=2\r\n\r\nVersion=2")]
     [TestFixture(typeof(JsonRepository), ".json", "Wifi playlist format",
         "{\"title\":\"MeineTopHits2022\",\"author\":\"DJ Gandalf\",\"createdAt\":\"2022-11-15\",\"items\":[{\"path\":\"c:\\\\myMusic\\\\Demo Song 1.mp3\"},{\"path\":\"c:\\\\myMusic\\\\SuperDuperSong2.mp3\"}]}")]
@@ -40,15 +40,8 @@ namespace Wifi.PlaylistEditor.Repositories.Test
         [SetUp]
         public void Init()
         {
-            _mockedPlaylistFactory = new Mock<IPlaylistFactory>();
-            _mockedPlaylistFactory.Setup(x => x.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()))                
-                .Returns<string, string, DateTime>( (title, author, createDate) => new Playlist(title, author, createDate));
-
             _mockedPlaylistItemFactory = new Mock<IPlaylistItemFactory>();
             _mockedFileSystem = new Mock<IFileSystem>();
-
-            _fixture = (T)Activator.CreateInstance(typeof(T), 
-                new object[] { _mockedFileSystem.Object, _mockedPlaylistFactory.Object, _mockedPlaylistItemFactory.Object });            
 
             var mockedItem1 = new Mock<IPlaylistItem>();
             mockedItem1.Setup(x => x.Title).Returns("Demo Song 1");
@@ -67,6 +60,14 @@ namespace Wifi.PlaylistEditor.Repositories.Test
             _mockedPlaylist.Setup(x => x.Name).Returns("MeineTopHits2022");
             _mockedPlaylist.Setup(x => x.CreateAt).Returns(new DateTime(2022, 11, 15));
             _mockedPlaylist.Setup(x => x.ItemList).Returns(myMockedItems);
+            _mockedPlaylist.Setup(x => x.Duration).Returns(TimeSpan.FromSeconds(220));
+
+            _mockedPlaylistFactory = new Mock<IPlaylistFactory>();
+            _mockedPlaylistFactory.Setup(x => x.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                                  .Returns(_mockedPlaylist.Object);
+
+            _fixture = (T)Activator.CreateInstance(typeof(T),
+                new object[] { _mockedFileSystem.Object, _mockedPlaylistFactory.Object, _mockedPlaylistItemFactory.Object });
         }
 
 
@@ -90,7 +91,7 @@ namespace Wifi.PlaylistEditor.Repositories.Test
         public void Save()
         {
             //Arrange
-            string contentToWrite = string.Empty;            
+            string contentToWrite = string.Empty;
 
             var mockedFile = new Mock<IFile>();
             mockedFile.Setup(x => x.WriteAllText(It.IsAny<string>(), It.IsAny<string>()))
