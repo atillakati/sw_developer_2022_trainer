@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DummyDataProvider.cs" />
     <Compile Include="frm_Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +111,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\no-image.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac">
+      <Version>6.5.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

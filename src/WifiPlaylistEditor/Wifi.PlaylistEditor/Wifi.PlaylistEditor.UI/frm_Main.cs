@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Wifi.PlaylistEditor.Factories;
 using Wifi.PlaylistEditor.Types;
-using Wifi.PlaylistEditor.UI.Properties;
+
 
 namespace Wifi.PlaylistEditor.UI
 {
@@ -22,14 +15,17 @@ namespace Wifi.PlaylistEditor.UI
         private IPlaylistItemFactory _playlistItemFactory;
         private IRepositoryFactory _repositoryFactory;
 
-        public frm_Main()
-        {
-            InitializeComponent();
+        public frm_Main(INewPlaylistDataProvider newPlaylistDataProvider,
+                        IPlaylistFactory playlistFactory,
+                        IPlaylistItemFactory playlistItemFactory,
+                        IRepositoryFactory repositoryFactory)
+        {         
+            _newPlaylistDataProvider = newPlaylistDataProvider;
+            _playlistFactory = playlistFactory;
+            _playlistItemFactory = playlistItemFactory;
+            _repositoryFactory = repositoryFactory;
 
-            _newPlaylistDataProvider = new frm_NewPlaylist();
-            _playlistFactory = new PlaylistFactory();
-            _playlistItemFactory = new PlaylistItemFactory();
-            _repositoryFactory = new RepositoryFactory(_playlistFactory, _playlistItemFactory);
+            InitializeComponent();
         }
            
 
