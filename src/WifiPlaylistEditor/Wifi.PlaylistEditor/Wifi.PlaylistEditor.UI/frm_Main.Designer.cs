@@ -48,9 +48,9 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.lbl_itemDetailInfo = new System.Windows.Forms.Label();
             this.lst_itemView = new System.Windows.Forms.ListView();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -63,7 +63,7 @@
             this.itemsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(816, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(876, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -97,6 +97,7 @@
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadToolStripMenuItem.Text = "Load";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
@@ -140,6 +141,7 @@
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
             this.removeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.removeToolStripMenuItem.Text = "Remove";
+            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -160,7 +162,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(816, 80);
+            this.panel1.Size = new System.Drawing.Size(876, 80);
             this.panel1.TabIndex = 1;
             // 
             // lbl_playlistInfo
@@ -179,7 +181,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 538);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(816, 61);
+            this.panel2.Size = new System.Drawing.Size(876, 61);
             this.panel2.TabIndex = 2;
             // 
             // lbl_itemDetailInfo
@@ -198,13 +200,10 @@
             this.lst_itemView.LargeImageList = this.imageList1;
             this.lst_itemView.Location = new System.Drawing.Point(0, 104);
             this.lst_itemView.Name = "lst_itemView";
-            this.lst_itemView.Size = new System.Drawing.Size(816, 434);
+            this.lst_itemView.Size = new System.Drawing.Size(876, 434);
             this.lst_itemView.TabIndex = 3;
             this.lst_itemView.UseCompatibleStateImageBehavior = false;
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.lst_itemView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lst_itemView_ItemSelectionChanged);
             // 
             // imageList1
             // 
@@ -212,11 +211,15 @@
             this.imageList1.ImageSize = new System.Drawing.Size(128, 128);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // frm_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(816, 599);
+            this.ClientSize = new System.Drawing.Size(876, 599);
             this.Controls.Add(this.lst_itemView);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
