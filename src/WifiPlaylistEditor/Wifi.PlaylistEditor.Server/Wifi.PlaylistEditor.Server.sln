@@ -15,6 +15,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wifi.PlaylistEditor.Reposit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wifi.PlaylistEditor.Factories", "Wifi.PlaylistEditor.Factories\Wifi.PlaylistEditor.Factories.csproj", "{C6597765-A49F-4EF9-AC79-C1B9DC892A86}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wifi.PlaylistEditor.Service", "Wifi.PlaylistEditor.Service\Wifi.PlaylistEditor.Service.csproj", "{684D8081-C34E-4449-8C2A-8C1BDE7EE5B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wifi.PlaylistEditor.DbRepositories", "Wifi.PlaylistEditor.DbRepositories\Wifi.PlaylistEditor.DbRepositories.csproj", "{69BC172D-AAF9-4561-B12E-6DB1F78E6A27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wifi.PlaylistEditor.DbRepositories.Test", "Wifi.PlaylistEditor.DbRepositories.Test\Wifi.PlaylistEditor.DbRepositories.Test.csproj", "{01EE484E-E4EF-48DE-93A4-609BE1BE74AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +51,18 @@ Global
 		{C6597765-A49F-4EF9-AC79-C1B9DC892A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6597765-A49F-4EF9-AC79-C1B9DC892A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6597765-A49F-4EF9-AC79-C1B9DC892A86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{684D8081-C34E-4449-8C2A-8C1BDE7EE5B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{684D8081-C34E-4449-8C2A-8C1BDE7EE5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{684D8081-C34E-4449-8C2A-8C1BDE7EE5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{684D8081-C34E-4449-8C2A-8C1BDE7EE5B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69BC172D-AAF9-4561-B12E-6DB1F78E6A27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69BC172D-AAF9-4561-B12E-6DB1F78E6A27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69BC172D-AAF9-4561-B12E-6DB1F78E6A27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69BC172D-AAF9-4561-B12E-6DB1F78E6A27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01EE484E-E4EF-48DE-93A4-609BE1BE74AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01EE484E-E4EF-48DE-93A4-609BE1BE74AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01EE484E-E4EF-48DE-93A4-609BE1BE74AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01EE484E-E4EF-48DE-93A4-609BE1BE74AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
