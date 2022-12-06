@@ -6,7 +6,6 @@ info:
     OpenAPI at [https://oai.github.io/Documentation](https://oai.github.io/Documentation).    
     
     Playlist server should provide following functionalities:
-
     - Upload item to server
     - Delete item from server
     - Get data from one item
@@ -14,11 +13,9 @@ info:
     - Create playlists
     - Modify playlists
     - Get a list of all existing playlists
-
     Further sources for information
       - [Multipart Requests](https://swagger.io/docs/specification/describing-request-body/multipart-requests)
       - [Upload And Download Multiple Files Using Web API](https://github.com/JayKrishnareddy/UploadandDownloadFiles)
-
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -36,8 +33,69 @@ tags:
     description: Item handling for the clients, up- and download of playlist items to server. See https://github.com/JayKrishnareddy/UploadandDownloadFiles
   - name: playlists
     description: Basic path to work with playlist items
+  - name: playlist-exports
+    description: Path to create different playlist file exports
   
 paths:
+
+  /playlistexports:
+    get:
+      tags:
+        - playlist-exports
+      summary: Returns different file export formats for playlists
+      description: Returns different file export formats for playlists
+      parameters:
+        - name: playlistid
+          in: query
+          description: The playlist by id to export 
+          required: true
+          explode: true
+          schema:
+            type: string
+            example: 479875A-A40E-4CC6-99AB-CB5CE62DA97C
+        - name: format-extension
+          in: query
+          description: The file extension of the requestsed export format
+          required: true
+          explode: true
+          schema:
+            type: string
+            example: .m3u
+      responses:
+        '200':
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: |
+                    #EXTM3U
+                    #EXTINF:221,Queen - Bohemian Rhapsody
+                    Titel 1.mp3
+                    #EXTINF:473,Dire Straits - Walk Of Life
+                    Pop\Meine Auswahl\Titel 2.ogg
+                    #EXTINF:264,冨田勲 – Boléro
+                    C:\Dokumente und Einstellungen\All Users\Dokumente\Eigene Musik\Titel irgendeinenummer.flac
+                    #EXTINF:504,Bob Marley - Buffalo Soldier
+                    http://www.seite.invalid/musik/titel4.mp3'
+        '404':
+          description: Playlist or extension not found            
+  /playlistexports/formats:
+    get:
+      tags:
+        - playlist-exports
+      summary: Returns available export file formats for playlists
+      description: Returns available export file formats for playlists
+      
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportFormatList'
+        '500':
+          description: Internal error
 
   /items:
     get:
@@ -94,9 +152,11 @@ paths:
         '201':
           description: successful operation
         '400':
-          description: Invalid playlist value 
+          description: Invalid item value 
         '404':
-          description: Playlist not found    
+          description: Playlist item not found
+        '423':
+          description: Item is locked due usage in one or more playlists
 
   /items/{itemId}:
     get:
@@ -286,7 +346,7 @@ components:
         extension:
           type: string
           format: string
-          example: mp3
+          example: .mp3
         path:
           type: string
           format: string
@@ -309,11 +369,9 @@ components:
         extension:
           type: string
           format: string
-          example: mp3                
+          example: .mp3                
       required:
-        - filename 
-        - extension
-        - file
+        - id         
 
     ItemPost:
       type: object
@@ -433,3 +491,18 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PlaylistInfo'    
+
+    ExportFormatList:
+      type: object
+      properties:
+        formats: 
+          type: array
+          items:
+            type: object
+            properties:
+              description:  
+                type: string                  
+                example: M3U Playlist format
+              extension:
+                type: string
+                example: .m3u
