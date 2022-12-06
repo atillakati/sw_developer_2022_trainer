@@ -135,29 +135,6 @@ paths:
         '405':
           description: Invalid input    
 
-    delete:
-      tags:
-        - item-handling
-      summary: Deletes a playlist item from server
-      description: delete a playlist      
-      parameters:        
-        - name: itemid
-          in: path
-          description: ID of playlist item to delete
-          required: true
-          schema:
-            type: string
-            format: string
-      responses:
-        '201':
-          description: successful operation
-        '400':
-          description: Invalid item value 
-        '404':
-          description: Playlist item not found
-        '423':
-          description: Item is locked due usage in one or more playlists
-
   /items/{itemId}:
     get:
       tags:
@@ -183,6 +160,30 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Playlist not found    
+          
+    delete:
+      tags:
+        - item-handling
+      summary: Deletes a playlist item from server
+      description: delete a playlist      
+      parameters:        
+        - name: itemId
+          in: path
+          description: ID of playlist item to delete
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '201':
+          description: successful operation
+        '400':
+          description: Invalid item value 
+        '404':
+          description: Playlist item not found
+        '423':
+          description: Item is locked due usage in one or more playlists
+    
     
   /playlists:
     get:
@@ -446,7 +447,15 @@ components:
 
     PlaylistUpdate:
       type: object
-      properties:          
+      properties: 
+        title:
+          type: string
+          format: string
+          example: "Neuer PlaylistTitel"         
+        author:
+          type: string
+          format: string
+          example: "DJ New Author"
         items: 
           type: array
           items:
