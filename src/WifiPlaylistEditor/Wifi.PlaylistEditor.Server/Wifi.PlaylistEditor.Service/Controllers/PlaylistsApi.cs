@@ -15,6 +15,8 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Wifi.PlaylistEditor.Service.Attributes;
 using Wifi.PlaylistEditor.Service.Models;
+using Wifi.PlaylistEditor.Service.Domain;
+using Wifi.PlaylistEditor.Service.Mappings;
 
 namespace Wifi.PlaylistEditor.Service.Controllers
 {
@@ -25,6 +27,13 @@ namespace Wifi.PlaylistEditor.Service.Controllers
     [Route("playlistapi/v1")]
     public class PlaylistsApiController : ControllerBase
     {
+        private readonly IPlaylistService _playlistService;
+
+        public PlaylistsApiController(IPlaylistService playlistService)
+        {
+            _playlistService = playlistService;
+        }
+
         /// <summary>
         /// Get all existing playlists
         /// </summary>
@@ -34,7 +43,7 @@ namespace Wifi.PlaylistEditor.Service.Controllers
         [HttpGet]
         [Route("playlists")]
         [ValidateModelState]        
-        public virtual IActionResult PlaylistsGet()
+        public async Task<IActionResult> PlaylistsGet()
         {
             //TODO: Uncomment the next line to return response 201 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(201, default(PlaylistList));
@@ -42,7 +51,12 @@ namespace Wifi.PlaylistEditor.Service.Controllers
             //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(404);
 
-            return StatusCode(201);
+            
+            var domainObjects = await _playlistService.GetAllPlaylists();
+
+            var entity = domainObjects.ToEntity();
+
+            return new ObjectResult(entity);
         }
 
         /// <summary>

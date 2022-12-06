@@ -12,4 +12,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Wifi.PlaylistEditor.DbRepositories\Wifi.PlaylistEditor.DbRepositories.csproj" />
+    <ProjectReference Include="..\Wifi.PlaylistEditor.Factories\Wifi.PlaylistEditor.Factories.csproj" />
+    <ProjectReference Include="..\Wifi.PlaylistEditor.Types\Wifi.PlaylistEditor.Types.csproj" />
+  </ItemGroup>
+
 </Project>

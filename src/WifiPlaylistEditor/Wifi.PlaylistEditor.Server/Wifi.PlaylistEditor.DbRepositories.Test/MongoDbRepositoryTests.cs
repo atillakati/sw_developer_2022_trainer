@@ -22,18 +22,18 @@ namespace Wifi.PlaylistEditor.DbRepositories.Test
             _fixture = new MongoDbRepository(options);
         }
 
-        [OneTimeTearDown]
-        public void Clear()
-        {
-            var playlists = _fixture.GetAsync().Result;
-            foreach (PlaylistEntity playlist in playlists)
-            {
-                _fixture.RemoveAsync(playlist.Id).Wait();
-            }
-        }
+        //[OneTimeTearDown]
+        //public void Clear()
+        //{
+        //    var playlists = _fixture.GetAsync().Result;
+        //    foreach (PlaylistEntity playlist in playlists)
+        //    {
+        //        _fixture.RemoveAsync(playlist.Id).Wait();
+        //    }
+        //}
 
         [Test]
-        [Ignore("MongoDB server needed")]
+        //[Ignore("MongoDB server needed")]
         [Category("Integration Test")]
         public async Task CreatAsync()
         {
