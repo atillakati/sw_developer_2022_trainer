@@ -13,3 +13,29 @@ C# MongoDB Guide
 
 ZetCode C# MongoDB tutorial
 [C# MongoDB tutorial](https://zetcode.com/csharp/mongodb/)
+
+## Uploading files using WebAPI POST
+```charp
+        [HttpPost]
+        [Route("items")]
+        [ValidateModelState]
+        public IActionResult Post([FromForm] string filename, [FromForm] string extension, [FromForm] IFormFile file)
+        {
+            string uploads = Path.Combine(_environment.ContentRootPath, "uploads");
+            if (!Directory.Exists(uploads))
+            {
+                Directory.CreateDirectory(uploads);
+            }
+            string filePath = Path.Combine(uploads, file.FileName);
+
+            using (Stream fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                file.CopyToAsync(fileStream).Wait();
+            }
+
+            //process the parameters
+            var length = file.Length;
+           
+            return StatusCode(201, $"{extension} {filename} => {length} bytes saved in : {filePath}");
+        }
+```
