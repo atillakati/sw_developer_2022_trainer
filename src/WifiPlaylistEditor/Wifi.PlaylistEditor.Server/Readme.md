@@ -14,6 +14,9 @@ C# MongoDB Guide
 ZetCode C# MongoDB tutorial
 [C# MongoDB tutorial](https://zetcode.com/csharp/mongodb/)
 
+Repository Pattern
+[RepoPattern](https://dotnettutorials.net/lesson/repository-design-pattern-csharp/)
+
 ## Uploading files using WebAPI POST
 ```charp
         [HttpPost]
