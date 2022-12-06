@@ -33,7 +33,7 @@ namespace Wifi.PlaylistEditor.DbRepositories.Test
         }
 
         [Test]
-        //[Ignore("MongoDB server needed")]
+        [Ignore("MongoDB server needed")]
         [Category("Integration Test")]
         public async Task CreatAsync()
         {
@@ -51,7 +51,7 @@ namespace Wifi.PlaylistEditor.DbRepositories.Test
         }
 
         [Test]
-        //[Ignore("MongoDB server needed")]
+        [Ignore("MongoDB server needed")]
         [Category("Integration Test")]
         public async Task UpdateAsync()
         {
@@ -71,7 +71,7 @@ namespace Wifi.PlaylistEditor.DbRepositories.Test
         }
 
         [Test]
-        //[Ignore("MongoDB server needed")]
+        [Ignore("MongoDB server needed")]
         [Category("Integration Test")]
         public async Task GetAsyncById()
         {
@@ -90,7 +90,7 @@ namespace Wifi.PlaylistEditor.DbRepositories.Test
         }
 
         [Test]
-        //[Ignore("MongoDB server needed")]
+        [Ignore("MongoDB server needed")]
         [Category("Integration Test")]
         public async Task GetAsync()
         {
@@ -108,7 +108,7 @@ namespace Wifi.PlaylistEditor.DbRepositories.Test
         }
 
         [Test]
-        //[Ignore("MongoDB server needed")]
+        [Ignore("MongoDB server needed")]
         [Category("Integration Test")]
         public async Task RemoveAsync()
         {
