@@ -50,13 +50,16 @@ namespace Wifi.PlaylistEditor.Service.Controllers
 
             //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(404);
-
-            
+                        
             var domainObjects = await _playlistService.GetAllPlaylists();
+            if(domainObjects == null)
+            {
+                return StatusCode(201, new PlaylistList());
+            }
 
             var entity = domainObjects.ToEntity();
 
-            return new ObjectResult(entity);
+            return StatusCode(201, entity);
         }
 
         /// <summary>

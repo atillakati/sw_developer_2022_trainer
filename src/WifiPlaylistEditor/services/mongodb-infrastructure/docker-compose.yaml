@@ -20,13 +20,8 @@ services:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=admin                
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
       - ME_CONFIG_MONGODB_SERVER=mongodb  
-  
-  watchtower:
-    image: containrrr/watchtower    
-    container_name: watchtower
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_POLL_INTERVAL=18000
+
+networks:
+  default:
+    name: playlist_server_network
+    driver: bridge
