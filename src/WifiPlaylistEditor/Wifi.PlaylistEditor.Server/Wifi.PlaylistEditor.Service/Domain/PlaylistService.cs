@@ -20,15 +20,36 @@ namespace Wifi.PlaylistEditor.Service.Domain
             _databaseRepositoy = databaseRepositoy;
         }
 
+        public void AddNewPlaylist(IPlaylist newPlaylist)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<IPlaylist>> GetAllPlaylists()
         {
             var playlistEntities = await _databaseRepositoy.GetAsync();
-            if(playlistEntities == null || playlistEntities.Count == 0)
+            if (playlistEntities == null || playlistEntities.Count == 0)
             {
                 return new List<IPlaylist>();
             }
 
             return playlistEntities.ToDomain(_playlistFactory, _playlistItemFactory);
+        }
+
+        public async Task<IPlaylistItem> GetItemById(string id)
+        {
+            var allPlaylists = await _databaseRepositoy.GetAsync();
+            var item = allPlaylists.SelectMany(x => x.Items)
+                                   .Where(x => x.Id == id).FirstOrDefault();
+
+            if (item == null)
+            {
+                return null;
+            }
+
+            var playlistItem = _playlistItemFactory.Create(item.Path);
+
+            return playlistItem;
         }
 
         public async Task<IPlaylist> GetPlaylistById(string playlistId)
@@ -43,13 +64,13 @@ namespace Wifi.PlaylistEditor.Service.Domain
             foreach (var item in playlistEntity.Items)
             {
                 var playlistItem = _playlistItemFactory.Create(Guid.Parse(item.Id), item.Path);
-                if(playlistItem != null)
+                if (playlistItem != null)
                 {
                     playlist.Add(playlistItem);
                 }
             }
 
             return playlist;
-        }    
+        }
     }
 }
