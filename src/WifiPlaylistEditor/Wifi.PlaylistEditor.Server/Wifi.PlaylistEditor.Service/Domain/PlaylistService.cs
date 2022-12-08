@@ -30,5 +30,26 @@ namespace Wifi.PlaylistEditor.Service.Domain
 
             return playlistEntities.ToDomain(_playlistFactory, _playlistItemFactory);
         }
+
+        public async Task<IPlaylist> GetPlaylistById(string playlistId)
+        {
+            var playlistEntity = await _databaseRepositoy.GetAsync(playlistId);
+            if (playlistEntity == null)
+            {
+                return null;
+            }
+
+            var playlist = playlistEntity.ToDomain(_playlistFactory, _playlistItemFactory);
+            foreach (var item in playlistEntity.Items)
+            {
+                var playlistItem = _playlistItemFactory.Create(Guid.Parse(item.Id), item.Path);
+                if(playlistItem != null)
+                {
+                    playlist.Add(playlistItem);
+                }
+            }
+
+            return playlist;
+        }    
     }
 }

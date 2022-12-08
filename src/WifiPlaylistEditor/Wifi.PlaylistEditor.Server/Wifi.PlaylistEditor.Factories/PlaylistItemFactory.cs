@@ -34,6 +34,13 @@ namespace Wifi.PlaylistEditor.Factories
 
         public IPlaylistItem Create(string itemPath)
         {
+            return Create(Guid.NewGuid(), itemPath);    
+        }
+
+        public IPlaylistItem Create(Guid id, string itemPath)
+        {
+            IPlaylistItem playlistItem = null;
+
             if (string.IsNullOrEmpty(itemPath) || !_fileSystem.File.Exists(itemPath))
             {
                 return null;
@@ -43,14 +50,19 @@ namespace Wifi.PlaylistEditor.Factories
             switch (extension)
             {
                 case ".mp3":
-                    return new Mp3Item(itemPath);
+                    playlistItem = new Mp3Item(itemPath);
+                    break;
 
                 case ".jpg":
-                    return new ImageItem(itemPath);
+                    playlistItem = new ImageItem(itemPath);
+                    break;
 
                 default:
-                    return null;                        
+                    return null;
             }
+
+            playlistItem.Id = id;
+            return playlistItem;
         }
     }
 }

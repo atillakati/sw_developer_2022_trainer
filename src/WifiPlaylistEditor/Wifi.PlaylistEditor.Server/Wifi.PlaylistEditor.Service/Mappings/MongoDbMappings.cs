@@ -10,9 +10,15 @@ namespace Wifi.PlaylistEditor.Service.Mappings
                                                            IPlaylistFactory playlistFactory,
                                                            IPlaylistItemFactory playlistItemFactory)
         {
-            return entities.Select(x => playlistFactory.Create(Guid.Parse(x.Id), 
-                                                               x.Title, x.Author, 
-                                                               DateTime.ParseExact(x.CreatedAt, "yyyyMMdd", CultureInfo.InvariantCulture)));
+            return entities.Select(x => x.ToDomain(playlistFactory, playlistItemFactory));
+        }
+
+        public static IPlaylist ToDomain(this PlaylistEntity entity,
+                                              IPlaylistFactory playlistFactory,
+                                              IPlaylistItemFactory playlistItemFactory)
+        {
+            return playlistFactory.Create(Guid.Parse(entity.Id), entity.Title, entity.Author,
+                DateTime.ParseExact(entity.CreatedAt, "yyyyMMdd", CultureInfo.InvariantCulture));
         }
     }
 }

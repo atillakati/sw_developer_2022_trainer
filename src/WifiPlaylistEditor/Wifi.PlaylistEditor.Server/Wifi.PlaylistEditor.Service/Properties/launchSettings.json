@@ -21,7 +21,7 @@
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/playlistapi/v1",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/playlistapi/v1/playlists",
       "publishAllPorts": true,
       "DockerfileRunArguments": "--network=playlist_server_network"
     }
