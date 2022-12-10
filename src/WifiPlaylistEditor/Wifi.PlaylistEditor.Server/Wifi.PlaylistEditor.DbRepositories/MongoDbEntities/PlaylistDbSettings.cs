@@ -6,6 +6,8 @@
 
         public string DatabaseName { get; set; } 
 
-        public string CollectionName { get; set; } 
+        public string PlaylistCollectionName { get; set; }
+
+        public string ItemsCollectionName { get; set; }
     }
 }

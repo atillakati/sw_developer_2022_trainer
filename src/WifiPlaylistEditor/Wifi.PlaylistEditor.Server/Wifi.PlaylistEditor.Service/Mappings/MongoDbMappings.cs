@@ -6,6 +6,17 @@ namespace Wifi.PlaylistEditor.Service.Mappings
 {
     public static class MongoDbMappings
     {
+        public static PlaylistItemEntity ToEntity(this IPlaylistItem playlistItem)
+        {
+            return new PlaylistItemEntity
+            {
+                Id = playlistItem.Id.ToString(),
+                Path = playlistItem.Path,                
+            };
+        }
+
+        
+
         public static IEnumerable<IPlaylist> ToDomain(this IEnumerable<PlaylistEntity> entities,
                                                            IPlaylistFactory playlistFactory,
                                                            IPlaylistItemFactory playlistItemFactory)

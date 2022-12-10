@@ -5,6 +5,23 @@ namespace Wifi.PlaylistEditor.Service.Mappings
 {
     public static class RestMappings
     {        
+        public static ItemList ToEntity(this IEnumerable<IPlaylistItem> domainItems)
+        {
+            var entityList = new ItemList();
+            entityList.Items = domainItems.Select(x => new PlaylistItem
+            {
+                Artist = x.Artist,
+                Duration = (long)x.Duration.TotalSeconds,
+                Extension = x.Extension,
+                Path = x.Path,
+                Thumbnail = x.Thumbnail,
+                Title = x.Title,
+                Id = x.Id.ToString()
+            }).ToList();
+
+            return entityList;
+        }
+
         public static IPlaylist ToDomain(this PlaylistPost entity, IPlaylistFactory playlistFactory)
         {
             var playlist = playlistFactory.Create(entity.Name, entity.Autor, DateTime.Now);

@@ -1,6 +1,7 @@
 ﻿using Wifi.PlaylistEditor.DbRepositories;
 using Wifi.PlaylistEditor.DbRepositories.MongoDbEntities;
 using Wifi.PlaylistEditor.Service.Mappings;
+using Wifi.PlaylistEditor.Service.Models;
 using Wifi.PlaylistEditor.Types;
 
 namespace Wifi.PlaylistEditor.Service.Domain
@@ -9,20 +10,55 @@ namespace Wifi.PlaylistEditor.Service.Domain
     {
         private readonly IPlaylistFactory _playlistFactory;
         private readonly IPlaylistItemFactory _playlistItemFactory;
-        private readonly IDatabaseRepository<PlaylistEntity> _databaseRepositoy;
+        private readonly IDatabaseRepository<PlaylistEntity, PlaylistItemEntity> _databaseRepositoy;
 
         public PlaylistService(IPlaylistFactory playlistFactory,
                                IPlaylistItemFactory playlistItemFactory,
-                               IDatabaseRepository<PlaylistEntity> databaseRepositoy)
+                               IDatabaseRepository<PlaylistEntity, PlaylistItemEntity> databaseRepositoy)
         {
             _playlistFactory = playlistFactory;
             _playlistItemFactory = playlistItemFactory;
             _databaseRepositoy = databaseRepositoy;
         }
 
-        public void AddNewPlaylist(IPlaylist newPlaylist)
+        public async Task AddNewPlaylist(IPlaylist newPlaylist)
         {
-            throw new NotImplementedException();
+            if(newPlaylist == null)
+            {
+                return;
+            }
+
+            var entity = new PlaylistEntity
+            {
+                Id = newPlaylist.Id.ToString(),
+                Author = newPlaylist.Author,
+                Title = newPlaylist.Name,
+                CreatedAt = newPlaylist.CreateAt.ToString("yyyyMMdd"),
+                Items = newPlaylist.ItemList.Select(x => x.ToEntity())
+            };
+
+            await _databaseRepositoy.CreateAsync(entity);
+        }
+
+        public async Task AddItem(IPlaylistItem newItem)
+        {
+            var entity = newItem.ToEntity();
+            await _databaseRepositoy.CreateItemAsync(entity);
+        }
+
+        public async Task<IEnumerable<IPlaylistItem>> GetAllItems()
+        {            
+            var items = await _databaseRepositoy.GetItemsAsync();
+         
+            if(items == null)
+            {
+                return Enumerable.Empty<IPlaylistItem>();
+            }
+            
+            var domainItems = items.Select(x => _playlistItemFactory.Create(Guid.Parse(x.Id), x.Path))
+                                   .ToList();
+
+            return domainItems;
         }
 
         public async Task<IEnumerable<IPlaylist>> GetAllPlaylists()
@@ -38,11 +74,14 @@ namespace Wifi.PlaylistEditor.Service.Domain
 
         public async Task<IPlaylistItem> GetItemById(string id)
         {
-            var allPlaylists = await _databaseRepositoy.GetAsync();
-            var item = allPlaylists.SelectMany(x => x.Items)
-                                   .Where(x => x.Id == id).FirstOrDefault();
+            var items = await _databaseRepositoy.GetItemsAsync();
+            if (items == null)
+            {
+                return null;
+            }
 
-            if (item == null)
+            var item = items.FirstOrDefault(x => x.Id == id);
+            if(item == null)
             {
                 return null;
             }

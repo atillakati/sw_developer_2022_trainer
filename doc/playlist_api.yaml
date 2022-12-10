@@ -362,15 +362,7 @@ components:
           type: string
           format: string
           description: The id of the item to Updates
-          example: 4979875A-A40E-4CC6-99AB-CB5CE62DA97C  
-        filename:
-          type: string
-          format: string
-          example: Bethoven_song
-        extension:
-          type: string
-          format: string
-          example: .mp3                
+          example: 4979875A-A40E-4CC6-99AB-CB5CE62DA97C                   
       required:
         - id         
 

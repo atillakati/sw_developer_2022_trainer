@@ -5,7 +5,7 @@ namespace Wifi.PlaylistEditor.DbRepositories
     /// <summary>
     /// Defines CRUD methods for a database repository
     /// </summary>
-    public interface IDatabaseRepository<T>
+    public interface IDatabaseRepository<T, TItem>
     {
         Task<List<T>> GetAsync();
 
@@ -16,5 +16,10 @@ namespace Wifi.PlaylistEditor.DbRepositories
         Task UpdateAsync(string id, T updatedPlaylist);
 
         Task RemoveAsync(string id);
+
+
+        Task<List<PlaylistItemEntity>> GetItemsAsync();
+
+        Task CreateItemAsync(TItem newPlaylistItem);
     }
 }

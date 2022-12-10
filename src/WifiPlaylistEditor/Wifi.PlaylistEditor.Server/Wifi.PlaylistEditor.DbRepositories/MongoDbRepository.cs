@@ -4,9 +4,10 @@ using Wifi.PlaylistEditor.DbRepositories.MongoDbEntities;
 
 namespace Wifi.PlaylistEditor.DbRepositories
 {
-    public class MongoDbRepository : IDatabaseRepository<PlaylistEntity>
+    public class MongoDbRepository : IDatabaseRepository<PlaylistEntity, PlaylistItemEntity>
     {
         private IMongoCollection<PlaylistEntity> _playlistCollection;
+        private IMongoCollection<PlaylistItemEntity> _itemsCollection;
 
         public MongoDbRepository(IOptions<PlaylistDbSettings> playlistDbSetting)
         {
@@ -18,9 +19,11 @@ namespace Wifi.PlaylistEditor.DbRepositories
             var mongoClient = new MongoClient(playlistDbSetting.Value.ConnectionString);
             var mongoDatabase = mongoClient.GetDatabase(playlistDbSetting.Value.DatabaseName);
 
-            _playlistCollection = mongoDatabase.GetCollection<PlaylistEntity>(playlistDbSetting.Value.CollectionName);
+            _playlistCollection = mongoDatabase.GetCollection<PlaylistEntity>(playlistDbSetting.Value.PlaylistCollectionName);
+            _itemsCollection = mongoDatabase.GetCollection<PlaylistItemEntity>(playlistDbSetting.Value.ItemsCollectionName);
         }
 
+        #region Playlist 
         public async Task CreateAsync(PlaylistEntity newPlaylist)
         {
             if(newPlaylist == null)
@@ -65,5 +68,26 @@ namespace Wifi.PlaylistEditor.DbRepositories
 
             await _playlistCollection.ReplaceOneAsync(x => x.Id == id, updatedPlaylist);
         }
+
+        #endregion
+
+        #region Items
+
+        public async Task<List<PlaylistItemEntity>> GetItemsAsync()
+        {
+            return await _itemsCollection.Find(x => true).ToListAsync();
+        }
+
+        public async Task CreateItemAsync(PlaylistItemEntity newPlaylistItem)
+        {
+            if (newPlaylistItem == null)
+            {
+                return;
+            }
+
+            await _itemsCollection.InsertOneAsync(newPlaylistItem);
+        }
+
+        #endregion
     }
 }

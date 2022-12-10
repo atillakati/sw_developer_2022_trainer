@@ -12,7 +12,7 @@ builder.Services.Configure<PlaylistDbSettings>(
 builder.Services.AddScoped<IPlaylistFactory, PlaylistFactory>();
 builder.Services.AddScoped<IPlaylistService, PlaylistService>();
 builder.Services.AddScoped<IPlaylistItemFactory, PlaylistItemFactory>();
-builder.Services.AddScoped<IDatabaseRepository<PlaylistEntity>, MongoDbRepository>();
+builder.Services.AddScoped<IDatabaseRepository<PlaylistEntity, PlaylistItemEntity>, MongoDbRepository>();
 
 
 builder.Services.AddControllers();
