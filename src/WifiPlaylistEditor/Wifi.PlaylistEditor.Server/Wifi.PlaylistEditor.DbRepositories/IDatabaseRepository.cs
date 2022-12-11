@@ -15,11 +15,13 @@ namespace Wifi.PlaylistEditor.DbRepositories
 
         Task UpdateAsync(string id, T updatedPlaylist);
 
-        Task RemoveAsync(string id);
+        Task RemovePlaylistAsync(string id);
 
 
         Task<List<PlaylistItemEntity>> GetItemsAsync();
 
         Task CreateItemAsync(TItem newPlaylistItem);
+
+        Task RemoveItemAsync(string itemId);
     }
 }

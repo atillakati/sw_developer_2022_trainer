@@ -7,6 +7,7 @@ using Wifi.PlaylistEditor.Service.Mappings;
 using Wifi.PlaylistEditor.Service.Domain;
 using Wifi.PlaylistEditor.Types;
 using Wifi.PlaylistEditor.DbRepositories.MongoDbEntities;
+using System.Text;
 
 namespace Wifi.PlaylistEditor.Service.Controllers
 {
@@ -36,7 +37,7 @@ namespace Wifi.PlaylistEditor.Service.Controllers
         {            
             IEnumerable<IPlaylistItem> items = await _playlistService.GetAllItems();
 
-            var entity = items.ToEntity();
+            var entity = items.ToRestEntity();
 
             return StatusCode(200, entity);
         }
@@ -45,45 +46,41 @@ namespace Wifi.PlaylistEditor.Service.Controllers
         [HttpDelete]
         [Route("items/{itemId}")]
         [ValidateModelState]
-        public virtual IActionResult ItemsItemIdDelete([FromRoute][Required] string itemId)
-        {
-            //TODO: Uncomment the next line to return response 201 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(201);
+        public async Task<IActionResult> ItemsItemIdDelete([FromRoute][Required] string itemId)
+        {            
+            var item = await _playlistService.GetItemById(itemId);
+            if(item == null)
+            {
+                return StatusCode(404);
+            }
 
-            //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(400);
+            if (System.IO.File.Exists(item.Path))
+            {
+                System.IO.File.Delete(item.Path);
+            }
 
-            //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(404);
+            await _playlistService.DeleteItem(itemId);
 
-            //TODO: Uncomment the next line to return response 423 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(423);
-
-            throw new NotImplementedException();
+            return StatusCode(204);
         }
 
         
         [HttpGet]
         [Route("items/{itemId}")]
         [ValidateModelState]
-        public virtual IActionResult ItemsItemIdGet([FromRoute][Required] string itemId)
+        public async Task<IActionResult> ItemsItemIdGet([FromRoute][Required] string itemId)
         {
-            //TODO: Uncomment the next line to return response 201 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(201, default(PlaylistItem));
+            var item = await _playlistService.GetItemById(itemId);
 
-            //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(400);
+            if(item == null) 
+            {
+                return StatusCode(404);
+            }
 
-            //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(404);
-            string exampleJson = null;
-            exampleJson = "{\n  \"duration\" : 205,\n  \"path\" : \"data\\musik\\Bethoven.mp3\",\n  \"thumbnail\" : \"\",\n  \"extension\" : \".mp3\",\n  \"artist\" : \"Gandalf Singer\",\n  \"id\" : \"4979875A-123E-4346-CCAB-CB5CE62DA97C\",\n  \"title\" : \"The bird song\"\n}";
-
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<PlaylistItem>(exampleJson)
-            : default(PlaylistItem);            //TODO: Change the data returned
-            return new ObjectResult(example);
+            var entity = item.ToRestEntity();
+            return StatusCode(200, entity);
         }
+   
 
         [HttpPost]
         [Route("items")]
@@ -105,7 +102,8 @@ namespace Wifi.PlaylistEditor.Service.Controllers
             var domainItem = _playlistItemFactory.Create(filePath);
             await _playlistService.AddItem(domainItem);
             
-            return StatusCode(201);
+            var path = $"{Request.HttpContext.Request.Scheme}://{Request.HttpContext.Request.Host}{Request.HttpContext.Request.Path}/{domainItem.Id}";
+            return StatusCode(201, new Models.ItemLink { Href = path});
         }
     }
 }

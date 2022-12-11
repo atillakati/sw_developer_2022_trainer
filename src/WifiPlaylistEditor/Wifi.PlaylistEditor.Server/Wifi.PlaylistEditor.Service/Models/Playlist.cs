@@ -56,7 +56,7 @@ namespace Wifi.PlaylistEditor.Service.Models
         [Required]
 
         [DataMember(Name = "autor")]
-        public string Autor { get; set; }
+        public string Author { get; set; }
 
         /// <summary>
         /// Gets or Sets DateOfCreation
@@ -85,7 +85,7 @@ namespace Wifi.PlaylistEditor.Service.Models
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Duration: ").Append(Duration).Append("\n");
-            sb.Append("  Autor: ").Append(Autor).Append("\n");
+            sb.Append("  Autor: ").Append(Author).Append("\n");
             sb.Append("  DateOfCreation: ").Append(DateOfCreation).Append("\n");
             sb.Append("  Items: ").Append(Items).Append("\n");
             sb.Append("}\n");
@@ -140,9 +140,9 @@ namespace Wifi.PlaylistEditor.Service.Models
                     Duration.Equals(other.Duration)
                 ) &&
                 (
-                    Autor == other.Autor ||
-                    Autor != null &&
-                    Autor.Equals(other.Autor)
+                    Author == other.Author ||
+                    Author != null &&
+                    Author.Equals(other.Author)
                 ) &&
                 (
                     DateOfCreation == other.DateOfCreation ||
@@ -172,8 +172,8 @@ namespace Wifi.PlaylistEditor.Service.Models
                     hashCode = hashCode * 59 + Name.GetHashCode();
                 if (Duration != null)
                     hashCode = hashCode * 59 + Duration.GetHashCode();
-                if (Autor != null)
-                    hashCode = hashCode * 59 + Autor.GetHashCode();
+                if (Author != null)
+                    hashCode = hashCode * 59 + Author.GetHashCode();
                 if (DateOfCreation != null)
                     hashCode = hashCode * 59 + DateOfCreation.GetHashCode();
                 if (Items != null)

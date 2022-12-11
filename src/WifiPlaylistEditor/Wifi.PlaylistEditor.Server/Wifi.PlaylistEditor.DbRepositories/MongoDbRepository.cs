@@ -49,7 +49,7 @@ namespace Wifi.PlaylistEditor.DbRepositories
             return await _playlistCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task RemoveAsync(string id)
+        public async Task RemovePlaylistAsync(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -86,6 +86,16 @@ namespace Wifi.PlaylistEditor.DbRepositories
             }
 
             await _itemsCollection.InsertOneAsync(newPlaylistItem);
+        }
+
+        public async Task RemoveItemAsync(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId))
+            {
+                return;
+            }
+
+            await _itemsCollection.DeleteOneAsync(x => x.Id == itemId);
         }
 
         #endregion

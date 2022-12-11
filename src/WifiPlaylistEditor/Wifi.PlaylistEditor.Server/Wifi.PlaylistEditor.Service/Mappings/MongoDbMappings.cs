@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Runtime.CompilerServices;
 using Wifi.PlaylistEditor.DbRepositories.MongoDbEntities;
 using Wifi.PlaylistEditor.Types;
 
@@ -30,6 +31,18 @@ namespace Wifi.PlaylistEditor.Service.Mappings
         {
             return playlistFactory.Create(Guid.Parse(entity.Id), entity.Title, entity.Author,
                 DateTime.ParseExact(entity.CreatedAt, "yyyyMMdd", CultureInfo.InvariantCulture));
+        }
+
+        public static PlaylistEntity ToEntity(this IPlaylist playlist)
+        {
+            return new PlaylistEntity
+            {
+                Id = playlist.Id.ToString(),
+                Author = playlist.Author,
+                Title = playlist.Name,
+                CreatedAt = playlist.CreateAt.ToString("yyyyMMdd"),
+                Items = playlist.ItemList.Select(x => x.ToEntity())
+            };
         }
     }
 }

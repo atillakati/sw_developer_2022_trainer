@@ -6,6 +6,7 @@ using Wifi.PlaylistEditor.Service.Models;
 using Wifi.PlaylistEditor.Service.Domain;
 using Wifi.PlaylistEditor.Service.Mappings;
 using Wifi.PlaylistEditor.Types;
+using SharpCompress.Common;
 
 namespace Wifi.PlaylistEditor.Service.Controllers
 {
@@ -18,13 +19,12 @@ namespace Wifi.PlaylistEditor.Service.Controllers
     {
         private readonly IPlaylistService _playlistService;
         private readonly IPlaylistFactory _playlistFactory;
-        private readonly IPlaylistItemFactory _playlistItemFactory;
+        
 
-        public PlaylistsApiController(IPlaylistService playlistService, IPlaylistFactory playlistFactory, IPlaylistItemFactory playlistItemFactory)
+        public PlaylistsApiController(IPlaylistService playlistService, IPlaylistFactory playlistFactory)
         {
             _playlistService = playlistService;
-            _playlistFactory = playlistFactory;
-            _playlistItemFactory = playlistItemFactory;
+            _playlistFactory = playlistFactory;            
         }
 
         
@@ -39,7 +39,7 @@ namespace Wifi.PlaylistEditor.Service.Controllers
                 return StatusCode(201, new PlaylistList());
             }
 
-            var entity = domainObjects.ToEntity();
+            var entity = domainObjects.ToRestEntity();
 
             return StatusCode(200, entity);
         }
@@ -60,7 +60,7 @@ namespace Wifi.PlaylistEditor.Service.Controllers
                 return StatusCode(404);
             }
 
-            var entity = domainObject.ToEntity();
+            var entity = domainObject.ToRestEntity();
 
             return StatusCode(200, entity);
         }
@@ -68,36 +68,47 @@ namespace Wifi.PlaylistEditor.Service.Controllers
         [HttpDelete]
         [Route("playlists/{playlistId}")]
         [ValidateModelState]        
-        public virtual IActionResult PlaylistsPlaylistIdDelete([FromRoute][Required] string playlistId)
-        {
-            //TODO: Uncomment the next line to return response 201 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(201);
+        public async Task<IActionResult> PlaylistsPlaylistIdDelete([FromRoute][Required] string playlistId)
+        {                        
+            var playlist = await _playlistService.GetPlaylistById(playlistId);
+            if(playlist == null)
+            {
+                return StatusCode(404);
+            }
 
-            //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(400);
-
-            //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(404);
-
-            throw new NotImplementedException();
+            await _playlistService.DeletePlaylist(playlistId);
+            return StatusCode(204);
         }
         
         [HttpPut]
         [Route("playlists/{playlistId}")]
         [ValidateModelState]     
-        public virtual IActionResult PlaylistsPlaylistIdPut([FromBody] PlaylistUpdate body, [FromRoute][Required] string playlistId)
-        {
-            //TODO: Uncomment the next line to return response 201 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(201, default(Playlist));
+        public async Task<IActionResult> PlaylistsPlaylistIdPut([FromBody] PlaylistUpdate body, [FromRoute][Required] string playlistId)
+        {            
+            var existingPlaylist = await _playlistService.GetPlaylistById(playlistId);
+            if (existingPlaylist == null || body == null)
+            {
+                return StatusCode(404);
+            }
 
-            //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(400);
+            var updatedPlaylist = body.ToDomain(_playlistFactory);
+            foreach (var item in body.Items)
+            {
+                var playlistItem = await _playlistService.GetItemById(item.Id);
+                if (playlistItem != null)
+                {
+                    updatedPlaylist.Add(playlistItem);
+                }
+                else
+                {
+                    return StatusCode(404, $"Item with id = {item.Id} not found.");
+                }
+            }
+            
+            await _playlistService.UpdatePlaylist(existingPlaylist, updatedPlaylist);
+            existingPlaylist = await _playlistService.GetPlaylistById(playlistId);
 
-            //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(404);
-            string exampleJson = null;
-           
-            return new ObjectResult(exampleJson);
+            return StatusCode(201, existingPlaylist.ToRestEntity());
         }
 
         [HttpPost]
@@ -126,7 +137,9 @@ namespace Wifi.PlaylistEditor.Service.Controllers
 
             await _playlistService.AddNewPlaylist(domainObject);
 
-            return StatusCode(201);
+            var playlistEnity = domainObject.ToRestEntity();
+
+            return StatusCode(201, playlistEnity);
         }
     }
 }

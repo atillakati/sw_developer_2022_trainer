@@ -47,16 +47,28 @@ namespace Wifi.PlaylistEditor.Service.Domain
         }
 
         public async Task<IEnumerable<IPlaylistItem>> GetAllItems()
-        {            
+        {
+            var domainItems = new List<IPlaylistItem> ();
+
             var items = await _databaseRepositoy.GetItemsAsync();
          
             if(items == null)
             {
                 return Enumerable.Empty<IPlaylistItem>();
             }
-            
-            var domainItems = items.Select(x => _playlistItemFactory.Create(Guid.Parse(x.Id), x.Path))
-                                   .ToList();
+
+            foreach (var item in items)
+            {
+                var domainItem = _playlistItemFactory.Create(Guid.Parse(item.Id), item.Path);
+                if(domainItem == null)
+                {
+                    await DeleteItem(item.Id);
+                }
+                else
+                {
+                    domainItems.Add(domainItem);
+                }
+            }            
 
             return domainItems;
         }
@@ -86,7 +98,7 @@ namespace Wifi.PlaylistEditor.Service.Domain
                 return null;
             }
 
-            var playlistItem = _playlistItemFactory.Create(item.Path);
+            var playlistItem = _playlistItemFactory.Create(Guid.Parse(item.Id), item.Path);
 
             return playlistItem;
         }
@@ -110,6 +122,30 @@ namespace Wifi.PlaylistEditor.Service.Domain
             }
 
             return playlist;
+        }
+
+        public async Task DeletePlaylist(string playlistId)
+        {
+            await _databaseRepositoy.RemovePlaylistAsync(playlistId);
+        }
+
+        public async Task DeleteItem(string itemId)
+        {
+            await _databaseRepositoy.RemoveItemAsync(itemId);
+        }
+
+        public async Task UpdatePlaylist(IPlaylist existingPlaylist, IPlaylist updatedPlaylist)
+        {
+            existingPlaylist.Name= updatedPlaylist.Name;
+            existingPlaylist.Author= updatedPlaylist.Author;
+            existingPlaylist.Clear();
+
+            foreach (var item in updatedPlaylist.ItemList)
+            {
+                existingPlaylist.Add(item);
+            }
+
+            await _databaseRepositoy.UpdateAsync(existingPlaylist.Id.ToString(), existingPlaylist.ToEntity());
         }
     }
 }
