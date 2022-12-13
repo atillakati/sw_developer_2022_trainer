@@ -6,6 +6,6 @@ namespace Wifi.PlaylistEditor.Types
     {
         IEnumerable<IFileDescription> AvailableTypes { get; }
 
-        IPlaylistItem Create(string itemPath);
+        IPlaylistItem Create(string itemPath);        
     }
 }
