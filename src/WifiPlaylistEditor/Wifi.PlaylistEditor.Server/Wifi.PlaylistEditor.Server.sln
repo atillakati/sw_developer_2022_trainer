@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wifi.PlaylistEditor.Types", "Wifi.PlaylistEditor.Types\Wifi.PlaylistEditor.Types.csproj", "{F0CA3486-1721-419A-9C01-D16E9701A696}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wifi.PlaylistEditor.Types.Test", "Wifi.PlaylistEditor.Types.Test\Wifi.PlaylistEditor.Types.Test.csproj", "{2C7A2358-9ECC-4598-8988-1FA7859279DE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wifi.PlaylistEditor.Items", "Wifi.PlaylistEditor.Items\Wifi.PlaylistEditor.Items.csproj", "{C4A1BB18-7C65-4963-829D-316D63685D12}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wifi.PlaylistEditor.Repositories", "Wifi.PlaylistEditor.Repositories\Wifi.PlaylistEditor.Repositories.csproj", "{D8864B15-54CD-4177-B501-D99CA1634F7A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wifi.PlaylistEditor.Repositories.Test", "Wifi.PlaylistEditor.Repositories.Test\Wifi.PlaylistEditor.Repositories.Test.csproj", "{06B8E743-4788-44F7-B2A1-F133773BF495}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wifi.PlaylistEditor.Factories", "Wifi.PlaylistEditor.Factories\Wifi.PlaylistEditor.Factories.csproj", "{C6597765-A49F-4EF9-AC79-C1B9DC892A86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wifi.PlaylistEditor.Service", "Wifi.PlaylistEditor.Service\Wifi.PlaylistEditor.Service.csproj", "{684D8081-C34E-4449-8C2A-8C1BDE7EE5B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wifi.PlaylistEditor.DbRepositories", "Wifi.PlaylistEditor.DbRepositories\Wifi.PlaylistEditor.DbRepositories.csproj", "{69BC172D-AAF9-4561-B12E-6DB1F78E6A27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wifi.PlaylistEditor.DbRepositories.Test", "Wifi.PlaylistEditor.DbRepositories.Test\Wifi.PlaylistEditor.DbRepositories.Test.csproj", "{01EE484E-E4EF-48DE-93A4-609BE1BE74AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F0CA3486-1721-419A-9C01-D16E9701A696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0CA3486-1721-419A-9C01-D16E9701A696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0CA3486-1721-419A-9C01-D16E9701A696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0CA3486-1721-419A-9C01-D16E9701A696}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C7A2358-9ECC-4598-8988-1FA7859279DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C7A2358-9ECC-4598-8988-1FA7859279DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C7A2358-9ECC-4598-8988-1FA7859279DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C7A2358-9ECC-4598-8988-1FA7859279DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4A1BB18-7C65-4963-829D-316D63685D12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4A1BB18-7C65-4963-829D-316D63685D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4A1BB18-7C65-4963-829D-316D63685D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4A1BB18-7C65-4963-829D-316D63685D12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8864B15-54CD-4177-B501-D99CA1634F7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8864B15-54CD-4177-B501-D99CA1634F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8864B15-54CD-4177-B501-D99CA1634F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8864B15-54CD-4177-B501-D99CA1634F7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06B8E743-4788-44F7-B2A1-F133773BF495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06B8E743-4788-44F7-B2A1-F133773BF495}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06B8E743-4788-44F7-B2A1-F133773BF495}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06B8E743-4788-44F7-B2A1-F133773BF495}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6597765-A49F-4EF9-AC79-C1B9DC892A86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6597765-A49F-4EF9-AC79-C1B9DC892A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6597765-A49F-4EF9-AC79-C1B9DC892A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6597765-A49F-4EF9-AC79-C1B9DC892A86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{684D8081-C34E-4449-8C2A-8C1BDE7EE5B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{684D8081-C34E-4449-8C2A-8C1BDE7EE5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{684D8081-C34E-4449-8C2A-8C1BDE7EE5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{684D8081-C34E-4449-8C2A-8C1BDE7EE5B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69BC172D-AAF9-4561-B12E-6DB1F78E6A27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69BC172D-AAF9-4561-B12E-6DB1F78E6A27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69BC172D-AAF9-4561-B12E-6DB1F78E6A27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69BC172D-AAF9-4561-B12E-6DB1F78E6A27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01EE484E-E4EF-48DE-93A4-609BE1BE74AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01EE484E-E4EF-48DE-93A4-609BE1BE74AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01EE484E-E4EF-48DE-93A4-609BE1BE74AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01EE484E-E4EF-48DE-93A4-609BE1BE74AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DAC2DC36-1EDA-4A56-B02E-C2C6BD4B8354}
+	EndGlobalSection
+EndGlobal

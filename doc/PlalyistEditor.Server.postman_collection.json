@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "3a3aa020-d966-43b4-8065-3f5a9160df92",
+		"name": "PlalyistEditor.Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2639348"
+	},
+	"item": [
+		{
+			"name": "Playlists",
+			"item": [
+				{
+					"name": "POST Playlist",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"My Top Charts 2022\",\r\n  \"autor\": \"Atilla Kati\",\r\n  \"items\": [\r\n    {\r\n      \"id\": \"f93abf0d-465d-4685-987a-38ad0e34aa55\"\r\n    }    \r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{port}}/playlistapi/v1/playlists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"playlistapi",
+								"v1",
+								"playlists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Playlists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{port}}/playlistapi/v1/playlists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"playlistapi",
+								"v1",
+								"playlists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Playlist by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{port}}/playlistapi/v1/playlists/92f7f72e-813a-4b49-b6e6-685eba176e6e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"playlistapi",
+								"v1",
+								"playlists",
+								"92f7f72e-813a-4b49-b6e6-685eba176e6e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Playlist",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{port}}/playlistapi/v1/playlists/c35a9785-4205-4acd-aae1-01d2ec113d37",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"playlistapi",
+								"v1",
+								"playlists",
+								"c35a9785-4205-4acd-aae1-01d2ec113d37"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Playlist",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"My Top Lena Charts 2022\",\r\n  \"author\": \"DJ Gandalf\",\r\n  \"items\": [\r\n    {\r\n      \"id\": \"f93abf0d-465d-4685-987a-38ad0e34aa55\"\r\n    },\r\n    {\r\n      \"id\": \"dd9ec26e-796a-4042-a94b-40a4bca0bdbe\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{port}}/playlistapi/v1/playlists/92f7f72e-813a-4b49-b6e6-685eba176e6e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"playlistapi",
+								"v1",
+								"playlists",
+								"92f7f72e-813a-4b49-b6e6-685eba176e6e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Items",
+			"item": [
+				{
+					"name": "POST Items",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "filename",
+									"value": "002 - Lena - Taken By A Stranger",
+									"type": "text"
+								},
+								{
+									"key": "extension",
+									"value": "mp3",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/atill/Music/DemoPlaylist Files/002 - Lena - Taken By A Stranger.mp3"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:{{port}}/playlistapi/v1/items",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"playlistapi",
+								"v1",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Playlist Items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{port}}/playlistapi/v1/items",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"playlistapi",
+								"v1",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Item by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{port}}/playlistapi/v1/items/dd9ec26e-796a-4042-a94b-40a4bca0bdbe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"playlistapi",
+								"v1",
+								"items",
+								"dd9ec26e-796a-4042-a94b-40a4bca0bdbe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{port}}/playlistapi/v1/items/4edf019e-8603-4487-ac1e-8eb81f1bb8d1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port}}",
+							"path": [
+								"playlistapi",
+								"v1",
+								"items",
+								"4edf019e-8603-4487-ac1e-8eb81f1bb8d1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
